@@ -1,0 +1,15 @@
+{
+  "storageLimitMB": 1024,
+  "allowPublicUploads": true,
+  "installDate": 1765508944927,
+  "storageType": "localFile",
+  "maxFileSizeMB": 500,
+  "defaultExpireDays": 7,
+  "ossConfig": {
+    "endpoint": "",
+    "bucket": "",
+    "region": "",
+    "accessKeyId": "",
+    "accessKeySecret": ""
+  }
+}

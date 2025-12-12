@@ -1,0 +1,435 @@
+[2025-12-11 22:34:52.359] [INFO] [server.cjs:282] =================================
+[2025-12-11 22:34:52.362] [INFO] [server.cjs:283] AirDrop-Lite 服务器已启动
+[2025-12-11 22:34:52.364] [INFO] [server.cjs:284] 端口: 3001
+[2025-12-11 22:34:52.365] [INFO] [server.cjs:285] 上传目录: C:\Users\huang\Desktop\airdrop-lite\uploadfiles
+[2025-12-11 22:34:52.365] [INFO] [server.cjs:286] 数据目录: C:\Users\huang\Desktop\airdrop-lite\data
+[2025-12-11 22:34:52.366] [INFO] [server.cjs:287] 日志目录: C:\Users\huang\Desktop\airdrop-lite\logs
+[2025-12-11 22:34:52.367] [INFO] [server.cjs:288] 环境: development
+[2025-12-11 22:34:52.368] [INFO] [server.cjs:289] 日志级别: DEBUG
+[2025-12-11 22:34:52.369] [INFO] [server.cjs:290] =================================
+[2025-12-11 22:34:53.449] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 2ms
+[2025-12-11 22:34:53.470] [ERROR] [logger.cjs:265] 服务器错误: checkAuth is not a function
+[2025-12-11 22:34:53.472] [ERROR] [logger.cjs:267] 堆栈信息: TypeError: checkAuth is not a function
+    at C:\Users\huang\Desktop\airdrop-lite\backend\logRoutes.cjs:10:8
+    at Layer.handleRequest (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:342:13)
+    at C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:297:9
+    at processParams (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:582:12)
+    at next (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:291:5)
+    at Function.handle (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:186:3)
+    at router (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:60:12)
+    at Layer.handleRequest (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:342:13)
+[2025-12-11 22:34:53.474] [ERROR] [server.cjs:87] POST /api/logs/frontend - 500 - ::1 - 21ms
+[2025-12-11 22:34:58.448] [ERROR] [logger.cjs:265] 服务器错误: checkAuth is not a function
+[2025-12-11 22:34:58.449] [ERROR] [logger.cjs:267] 堆栈信息: TypeError: checkAuth is not a function
+    at C:\Users\huang\Desktop\airdrop-lite\backend\logRoutes.cjs:10:8
+    at Layer.handleRequest (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:342:13)
+    at C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:297:9
+    at processParams (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:582:12)
+    at next (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:291:5)
+    at Function.handle (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:186:3)
+    at router (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:60:12)
+    at Layer.handleRequest (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:342:13)
+[2025-12-11 22:34:58.451] [ERROR] [server.cjs:87] POST /api/logs/frontend - 500 - ::1 - 3ms
+[2025-12-11 22:35:03.438] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:35:03.442] [ERROR] [logger.cjs:265] 服务器错误: checkAuth is not a function
+[2025-12-11 22:35:03.443] [ERROR] [logger.cjs:267] 堆栈信息: TypeError: checkAuth is not a function
+    at C:\Users\huang\Desktop\airdrop-lite\backend\logRoutes.cjs:10:8
+    at Layer.handleRequest (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:342:13)
+    at C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:297:9
+    at processParams (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:582:12)
+    at next (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:291:5)
+    at Function.handle (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:186:3)
+    at router (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:60:12)
+    at Layer.handleRequest (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:342:13)
+[2025-12-11 22:35:03.444] [ERROR] [server.cjs:87] POST /api/logs/frontend - 500 - ::1 - 3ms
+[2025-12-11 22:35:08.448] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:35:08.452] [ERROR] [logger.cjs:265] 服务器错误: checkAuth is not a function
+[2025-12-11 22:35:08.453] [ERROR] [logger.cjs:267] 堆栈信息: TypeError: checkAuth is not a function
+    at C:\Users\huang\Desktop\airdrop-lite\backend\logRoutes.cjs:10:8
+    at Layer.handleRequest (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:342:13)
+    at C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:297:9
+    at processParams (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:582:12)
+    at next (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:291:5)
+    at Function.handle (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:186:3)
+    at router (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:60:12)
+    at Layer.handleRequest (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\huang\Desktop\airdrop-lite\node_modules\router\index.js:342:13)
+[2025-12-11 22:35:08.454] [ERROR] [server.cjs:87] POST /api/logs/frontend - 500 - ::1 - 2ms
+[2025-12-11 22:41:16.791] [INFO] [server.cjs:282] =================================
+[2025-12-11 22:41:16.796] [INFO] [server.cjs:283] AirDrop-Lite 服务器已启动
+[2025-12-11 22:41:16.797] [INFO] [server.cjs:284] 端口: 3001
+[2025-12-11 22:41:16.798] [INFO] [server.cjs:285] 上传目录: C:\Users\huang\Desktop\airdrop-lite\uploadfiles
+[2025-12-11 22:41:16.799] [INFO] [server.cjs:286] 数据目录: C:\Users\huang\Desktop\airdrop-lite\data
+[2025-12-11 22:41:16.800] [INFO] [server.cjs:287] 日志目录: C:\Users\huang\Desktop\airdrop-lite\logs
+[2025-12-11 22:41:16.801] [INFO] [server.cjs:288] 环境: development
+[2025-12-11 22:41:16.802] [INFO] [server.cjs:289] 日志级别: DEBUG
+[2025-12-11 22:41:16.803] [INFO] [server.cjs:290] =================================
+[2025-12-11 22:41:30.464] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 6ms
+[2025-12-11 22:41:30.497] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 25ms
+[2025-12-11 22:42:02.491] [DEBUG] 获取设置请求
+[2025-12-11 22:42:02.493] [DEBUG] 设置获取成功
+[2025-12-11 22:42:02.495] [INFO] [server.cjs:87] GET /api/settings - 304 - ::1 - 4ms
+[2025-12-11 22:42:02.507] [DEBUG] 获取所有文件列表
+[2025-12-11 22:42:02.509] [DEBUG] 返回 0 个文件
+[2025-12-11 22:42:02.510] [INFO] [server.cjs:87] GET /api/files - 304 - ::1 - 3ms
+[2025-12-11 22:42:07.116] [DEBUG] 通过哈希查询文件: hash=b2c72037431c4cfeb71243f48e3f9f2914b4b07acc11243476cc7943388340e3
+[2025-12-11 22:42:07.117] [WARN] 文件不存在: hash=b2c72037431c4cfeb71243f48e3f9f2914b4b07acc11243476cc7943388340e3
+[2025-12-11 22:42:07.118] [WARN] [server.cjs:87] GET /api/files/hash/b2c72037431c4cfeb71243f48e3f9f2914b4b07acc11243476cc7943388340e3 - 404 - ::1 - 3ms
+[2025-12-11 22:42:07.125] [INFO] [server.cjs:87] OPTIONS /api/upload - 200 - ::1 - 0ms
+[2025-12-11 22:42:07.429] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:42:07.438] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:42:10.505] [INFO] 文件上传成功: Octane2022ç ´è§£ï¼æ æ°´å°ç½å«+æ±å).zip -> fallback_1765464127133.zip (784791790 bytes)
+[2025-12-11 22:42:10.509] [INFO] [server.cjs:87] POST /api/upload - 200 - ::1 - 3378ms
+[2025-12-11 22:42:10.518] [INFO] [server.cjs:87] OPTIONS /api/files - 200 - ::1 - 1ms
+[2025-12-11 22:42:10.523] [DEBUG] 创建文件记录: code=HJ2S6W, name=Octane2022破解（无水印白嫖+汉化).zip
+[2025-12-11 22:42:10.524] [INFO] 文件记录创建成功: id=c06c62c3-34bb-4150-bc9d-adabf7351618, code=HJ2S6W, name=Octane2022破解（无水印白嫖+汉化).zip, size=784791790
+[2025-12-11 22:42:10.525] [INFO] [server.cjs:87] POST /api/files - 201 - ::1 - 4ms
+[2025-12-11 22:42:12.425] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:42:16.377] [DEBUG] 会话检查: 无效或已过期
+[2025-12-11 22:42:16.379] [WARN] [server.cjs:87] GET /api/auth/check - 401 - ::1 - 2ms
+[2025-12-11 22:42:16.384] [DEBUG] 会话检查: 无效或已过期
+[2025-12-11 22:42:16.386] [WARN] [server.cjs:87] GET /api/auth/check - 401 - ::1 - 2ms
+[2025-12-11 22:42:17.422] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:42:17.426] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:42:20.159] [INFO] [server.cjs:87] OPTIONS /api/auth/verify - 200 - ::1 - 0ms
+[2025-12-11 22:42:20.163] [DEBUG] 密码验证请求
+[2025-12-11 22:42:20.213] [INFO] 密码验证成功，已创建会话: expiresAt=2025-12-18T14:42:20.213Z
+[2025-12-11 22:42:20.215] [INFO] [server.cjs:87] POST /api/auth/verify - 200 - ::1 - 53ms
+[2025-12-11 22:42:20.244] [DEBUG] 获取所有文件列表
+[2025-12-11 22:42:20.246] [DEBUG] 返回 1 个文件
+[2025-12-11 22:42:20.247] [INFO] [server.cjs:87] GET /api/files - 200 - ::1 - 3ms
+[2025-12-11 22:42:20.259] [DEBUG] 获取设置请求
+[2025-12-11 22:42:20.261] [DEBUG] 设置获取成功
+[2025-12-11 22:42:20.262] [INFO] [server.cjs:87] GET /api/settings - 304 - ::1 - 3ms
+[2025-12-11 22:42:22.423] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:42:27.432] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:42:27.436] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:42:32.433] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:42:37.432] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:42:37.438] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:42:42.444] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:42:42.455] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:42:47.447] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:42:52.448] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:42:52.453] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:42:57.443] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:43:02.443] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:43:02.448] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:43:07.435] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:43:12.447] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:43:12.452] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:43:17.448] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:43:22.445] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:43:22.449] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:43:27.439] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:43:32.445] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:43:32.451] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:43:37.439] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:44:30.444] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:44:30.453] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:45:30.452] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:45:30.462] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:46:30.447] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:46:30.469] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:47:30.452] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:47:30.462] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:47:34.950] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:47:37.430] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:47:37.434] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:47:42.431] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:47:47.424] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:47:47.428] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:47:52.433] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:47:52.438] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:47:57.433] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:48:02.430] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:48:02.435] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:48:07.426] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:48:12.435] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:48:12.441] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:48:17.425] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:48:22.422] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:48:22.426] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:48:27.429] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:48:27.434] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:48:32.426] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:48:37.423] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:48:37.428] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:48:42.432] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:48:42.436] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:48:47.426] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:48:52.426] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:48:52.431] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:48:57.432] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:48:57.437] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:49:02.431] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:49:07.422] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:49:07.426] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:49:12.432] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:49:12.437] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:49:17.426] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:49:22.434] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:49:22.439] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:49:27.426] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:49:32.429] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:49:32.434] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:49:37.432] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:49:42.429] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:49:42.435] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:49:47.420] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:49:52.433] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:49:52.438] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:49:57.432] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:50:02.424] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:50:02.427] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:50:07.431] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:50:07.436] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:50:12.428] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:50:17.435] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:50:17.440] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:50:22.421] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:50:27.430] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:50:27.435] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:50:32.424] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:50:37.434] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:50:37.438] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:50:42.433] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:50:47.425] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:50:47.431] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:50:52.427] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:50:57.429] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:50:57.434] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:51:02.422] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:51:07.429] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:51:07.435] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:51:12.423] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:51:17.420] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:51:17.424] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:51:22.427] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:51:22.433] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:51:27.433] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:51:27.438] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:51:32.420] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:51:37.428] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:51:37.434] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:51:42.425] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:51:47.429] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:51:47.435] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:51:52.428] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:51:57.427] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:51:57.431] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:52:02.441] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:52:02.449] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:52:07.420] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:52:12.436] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:52:12.441] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:52:17.423] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:52:22.435] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:52:22.441] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:52:27.421] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:52:32.428] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:52:32.433] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:52:37.437] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:52:37.443] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:52:42.423] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:52:47.426] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:52:47.432] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:52:52.435] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:52:52.441] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:52:57.425] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:53:02.434] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:53:02.439] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:53:07.430] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:53:12.430] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:53:12.436] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:53:17.432] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:53:22.424] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:53:22.428] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:53:27.437] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:53:27.442] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:53:32.447] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:53:32.453] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:53:37.436] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:53:42.438] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:53:42.443] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:53:47.439] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:53:52.441] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:53:52.446] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:53:57.438] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:54:02.444] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:54:02.451] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:54:07.438] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:54:12.439] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:54:12.443] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:54:17.439] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:54:22.439] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:54:22.445] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:54:27.439] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:54:32.435] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:54:32.438] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:55:30.445] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:55:30.455] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:56:30.453] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:56:30.476] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:57:30.443] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:57:30.454] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:58:30.442] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 22:58:30.451] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 22:59:30.447] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:59:30.456] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:59:52.356] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:59:52.363] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 22:59:57.442] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 22:59:57.448] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:00:02.443] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:00:07.443] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:00:07.448] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:00:12.440] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:00:17.448] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:00:17.453] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:00:22.448] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:00:27.442] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:00:27.446] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:00:32.438] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:00:37.445] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:00:37.450] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:00:42.448] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:00:47.443] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:00:47.447] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:00:52.437] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:01:30.446] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:01:30.457] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:02:30.445] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:02:30.453] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:03:30.445] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:03:30.455] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:04:30.438] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:04:30.450] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 2ms
+[2025-12-11 23:05:30.448] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:05:30.458] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:06:30.443] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:06:30.454] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:07:30.450] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:07:30.460] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:08:30.439] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:08:30.447] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:09:30.449] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:09:30.460] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:10:30.437] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:10:30.445] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:11:30.446] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:11:30.460] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:12:30.447] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:12:30.456] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:13:30.438] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:13:30.445] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:14:30.444] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:14:30.457] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 2ms
+[2025-12-11 23:15:30.438] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:15:30.449] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:15:52.420] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:15:52.428] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:15:57.424] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:16:02.428] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:16:02.433] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:16:07.427] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 2ms
+[2025-12-11 23:16:12.429] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:16:12.434] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:16:17.433] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:16:22.430] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:16:22.433] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:16:27.428] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:16:32.444] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:16:32.458] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:16:37.446] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:16:42.442] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:16:42.445] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:16:47.448] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:16:47.453] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:16:52.442] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:16:57.438] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:16:57.442] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:17:02.434] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:17:07.440] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:17:07.444] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:17:12.434] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:17:17.440] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:17:17.448] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:17:22.447] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:17:22.452] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:17:27.441] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:17:50.250] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:17:50.268] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:17:52.439] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:17:57.435] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:17:57.439] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:18:02.447] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:18:02.452] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:18:07.446] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:18:12.447] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:18:12.451] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:18:17.443] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:18:22.449] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:18:22.454] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:18:27.445] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:18:32.437] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:18:32.441] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:18:37.438] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:18:42.436] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:18:42.440] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:18:47.433] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:19:30.442] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:19:30.454] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 3ms
+[2025-12-11 23:20:30.446] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:20:30.455] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:21:30.453] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:21:30.469] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:22:30.438] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:22:30.447] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 2ms
+[2025-12-11 23:23:30.437] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:23:30.450] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:24:30.455] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:24:30.470] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:25:30.444] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:25:30.456] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:26:30.451] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:26:30.462] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:27:30.443] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:27:30.462] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:28:30.443] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:28:30.449] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:29:30.446] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:29:30.453] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:30:30.440] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:30:30.446] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:31:30.449] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:31:30.457] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:32:30.440] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:32:30.445] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:33:30.448] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:33:30.454] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:34:30.447] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:34:30.452] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-11 23:35:30.450] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:35:30.456] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:36:30.447] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:36:30.459] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:37:30.450] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:37:30.466] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:38:30.447] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:38:30.457] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 2ms
+[2025-12-11 23:39:30.446] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:39:30.453] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:40:30.448] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:40:30.457] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:41:30.446] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-11 23:41:30.461] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-11 23:42:30.448] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-11 23:42:30.459] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms

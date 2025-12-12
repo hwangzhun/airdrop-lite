@@ -1,0 +1,256 @@
+[2025-12-12 11:04:39.407] [INFO] [server.cjs:282] =================================
+[2025-12-12 11:04:39.412] [INFO] [server.cjs:283] AirDrop-Lite 服务器已启动
+[2025-12-12 11:04:39.413] [INFO] [server.cjs:284] 端口: 3001
+[2025-12-12 11:04:39.413] [INFO] [server.cjs:285] 上传目录: C:\Users\Administrator\Desktop\Github\airdrop-lite\uploadfiles
+[2025-12-12 11:04:39.413] [INFO] [server.cjs:286] 数据目录: C:\Users\Administrator\Desktop\Github\airdrop-lite\data
+[2025-12-12 11:04:39.414] [INFO] [server.cjs:287] 日志目录: C:\Users\Administrator\Desktop\Github\airdrop-lite\logs
+[2025-12-12 11:04:39.414] [INFO] [server.cjs:288] 环境: development
+[2025-12-12 11:04:39.414] [INFO] [server.cjs:289] 日志级别: DEBUG
+[2025-12-12 11:04:39.415] [INFO] [server.cjs:290] =================================
+[2025-12-12 11:04:40.940] [INFO] [server.cjs:87] OPTIONS /api/settings - 200 - ::1 - 4ms
+[2025-12-12 11:04:40.952] [DEBUG] 保存设置请求 {
+  "settings": {
+    "storageLimitMB": 100,
+    "allowPublicUploads": true,
+    "installDate": 1765508680930,
+    "storageType": "localFile",
+    "maxFileSizeMB": 100,
+    "defaultExpireDays": 7,
+    "ossConfig": {
+      "endpoint": "",
+      "bucket": "",
+      "region": "",
+      "accessKeyId": "",
+      "accessKeySecret": ""
+    }
+  }
+}
+[2025-12-12 11:04:40.953] [INFO] 设置保存成功 {
+  "storageType": "localFile",
+  "maxFileSizeMB": 100,
+  "storageLimitMB": 100
+}
+[2025-12-12 11:04:40.954] [INFO] [server.cjs:87] POST /api/settings - 200 - ::1 - 13ms
+[2025-12-12 11:09:04.930] [INFO] [server.cjs:87] OPTIONS /api/settings - 200 - ::1 - 1ms
+[2025-12-12 11:09:04.931] [DEBUG] 保存设置请求 {
+  "settings": {
+    "storageLimitMB": 100,
+    "allowPublicUploads": true,
+    "installDate": 1765508944927,
+    "storageType": "localFile",
+    "maxFileSizeMB": 100,
+    "defaultExpireDays": 7,
+    "ossConfig": {
+      "endpoint": "",
+      "bucket": "",
+      "region": "",
+      "accessKeyId": "",
+      "accessKeySecret": ""
+    }
+  }
+}
+[2025-12-12 11:09:04.932] [INFO] 设置保存成功 {
+  "storageType": "localFile",
+  "maxFileSizeMB": 100,
+  "storageLimitMB": 100
+}
+[2025-12-12 11:09:04.932] [INFO] [server.cjs:87] POST /api/settings - 200 - ::1 - 1ms
+[2025-12-12 11:09:28.769] [DEBUG] 会话检查: 无token
+[2025-12-12 11:09:28.771] [WARN] [server.cjs:87] GET /api/auth/check - 401 - ::1 - 3ms
+[2025-12-12 11:09:28.774] [DEBUG] 会话检查: 无token
+[2025-12-12 11:09:28.775] [WARN] [server.cjs:87] GET /api/auth/check - 401 - ::1 - 1ms
+[2025-12-12 11:09:41.496] [INFO] [server.cjs:87] OPTIONS /api/auth/verify - 200 - ::1 - 1ms
+[2025-12-12 11:09:41.498] [DEBUG] 密码验证请求
+[2025-12-12 11:09:41.549] [WARN] 密码验证失败: 密码错误
+[2025-12-12 11:09:41.550] [WARN] [server.cjs:87] POST /api/auth/verify - 401 - ::1 - 52ms
+[2025-12-12 11:09:47.684] [INFO] [server.cjs:87] OPTIONS /api/auth/verify - 200 - ::1 - 1ms
+[2025-12-12 11:09:47.686] [DEBUG] 密码验证请求
+[2025-12-12 11:09:47.730] [INFO] 密码验证成功，已创建会话: expiresAt=2025-12-19T03:09:47.730Z
+[2025-12-12 11:09:47.731] [INFO] [server.cjs:87] POST /api/auth/verify - 200 - ::1 - 45ms
+[2025-12-12 11:09:47.754] [DEBUG] 获取所有文件列表
+[2025-12-12 11:09:47.755] [DEBUG] 返回 1 个文件
+[2025-12-12 11:09:47.756] [INFO] [server.cjs:87] GET /api/files - 200 - ::1 - 3ms
+[2025-12-12 11:09:47.762] [DEBUG] 获取设置请求
+[2025-12-12 11:09:47.763] [DEBUG] 设置获取成功
+[2025-12-12 11:09:47.763] [INFO] [server.cjs:87] GET /api/settings - 200 - ::1 - 1ms
+[2025-12-12 11:09:50.999] [INFO] [server.cjs:87] OPTIONS /api/files/c06c62c3-34bb-4150-bc9d-adabf7351618 - 200 - ::1 - 1ms
+[2025-12-12 11:09:51.007] [DEBUG] 删除文件: id=c06c62c3-34bb-4150-bc9d-adabf7351618
+[2025-12-12 11:09:51.008] [WARN] 物理文件不存在或路径无效: fallback_1765464127133.zip
+[2025-12-12 11:09:51.008] [INFO] 文件记录删除成功: id=c06c62c3-34bb-4150-bc9d-adabf7351618, code=HJ2S6W, name=Octane2022破解（无水印白嫖+汉化).zip
+[2025-12-12 11:09:51.010] [INFO] [server.cjs:87] DELETE /api/files/c06c62c3-34bb-4150-bc9d-adabf7351618 - 200 - ::1 - 4ms
+[2025-12-12 11:09:51.016] [DEBUG] 获取所有文件列表
+[2025-12-12 11:09:51.017] [DEBUG] 返回 0 个文件
+[2025-12-12 11:09:51.018] [INFO] [server.cjs:87] GET /api/files - 200 - ::1 - 2ms
+[2025-12-12 11:09:51.026] [DEBUG] 获取设置请求
+[2025-12-12 11:09:51.027] [DEBUG] 设置获取成功
+[2025-12-12 11:09:51.028] [INFO] [server.cjs:87] GET /api/settings - 304 - ::1 - 2ms
+[2025-12-12 11:10:24.937] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-12 11:10:24.939] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-12 11:10:26.856] [DEBUG] 会话检查: 有效
+[2025-12-12 11:10:26.857] [INFO] [server.cjs:87] GET /api/auth/check - 200 - ::1 - 1ms
+[2025-12-12 11:10:26.859] [DEBUG] 会话检查: 有效
+[2025-12-12 11:10:26.860] [INFO] [server.cjs:87] GET /api/auth/check - 304 - ::1 - 2ms
+[2025-12-12 11:10:26.863] [DEBUG] 获取所有文件列表
+[2025-12-12 11:10:26.864] [DEBUG] 返回 0 个文件
+[2025-12-12 11:10:26.865] [INFO] [server.cjs:87] GET /api/files - 304 - ::1 - 2ms
+[2025-12-12 11:10:26.872] [DEBUG] 获取设置请求
+[2025-12-12 11:10:26.873] [DEBUG] 设置获取成功
+[2025-12-12 11:10:26.873] [INFO] [server.cjs:87] GET /api/settings - 304 - ::1 - 1ms
+[2025-12-12 11:10:29.930] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-12 11:10:33.204] [INFO] [server.cjs:87] OPTIONS /api/settings - 200 - ::1 - 1ms
+[2025-12-12 11:10:33.208] [DEBUG] 保存设置请求 {
+  "settings": {
+    "storageLimitMB": 1024,
+    "allowPublicUploads": true,
+    "installDate": 1765508944927,
+    "storageType": "localFile",
+    "maxFileSizeMB": 500,
+    "defaultExpireDays": 7,
+    "ossConfig": {
+      "endpoint": "",
+      "bucket": "",
+      "region": "",
+      "accessKeyId": "",
+      "accessKeySecret": ""
+    }
+  }
+}
+[2025-12-12 11:10:33.209] [INFO] 设置保存成功 {
+  "storageType": "localFile",
+  "maxFileSizeMB": 500,
+  "storageLimitMB": 1024
+}
+[2025-12-12 11:10:33.210] [INFO] [server.cjs:87] POST /api/settings - 200 - ::1 - 2ms
+[2025-12-12 11:10:34.927] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-12 11:10:34.934] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 3ms
+[2025-12-12 11:10:39.935] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-12 11:10:39.937] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-12 11:10:44.928] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-12 11:10:45.241] [DEBUG] 获取设置请求
+[2025-12-12 11:10:45.241] [DEBUG] 设置获取成功
+[2025-12-12 11:10:45.242] [INFO] [server.cjs:87] GET /api/settings - 200 - ::1 - 1ms
+[2025-12-12 11:10:45.255] [DEBUG] 获取所有文件列表
+[2025-12-12 11:10:45.256] [DEBUG] 返回 0 个文件
+[2025-12-12 11:10:45.257] [INFO] [server.cjs:87] GET /api/files - 304 - ::1 - 1ms
+[2025-12-12 11:10:46.772] [DEBUG] 通过哈希查询文件: hash=091e1930a47dfdbb92b1fa8609c2003bdb3194f9c16edfef4341793a13c6394f
+[2025-12-12 11:10:46.772] [WARN] 文件不存在: hash=091e1930a47dfdbb92b1fa8609c2003bdb3194f9c16edfef4341793a13c6394f
+[2025-12-12 11:10:46.773] [WARN] [server.cjs:87] GET /api/files/hash/091e1930a47dfdbb92b1fa8609c2003bdb3194f9c16edfef4341793a13c6394f - 404 - ::1 - 1ms
+[2025-12-12 11:10:46.777] [INFO] [server.cjs:87] OPTIONS /api/upload - 200 - ::1 - 0ms
+[2025-12-12 11:10:47.145] [INFO] 文件上传成功: å¹¿å·-ä¸°å·¢æ.rar -> fallback_1765509046784.rar (106742642 bytes)
+[2025-12-12 11:10:47.146] [INFO] [server.cjs:87] POST /api/upload - 200 - ::1 - 367ms
+[2025-12-12 11:10:47.153] [INFO] [server.cjs:87] OPTIONS /api/files - 200 - ::1 - 1ms
+[2025-12-12 11:10:47.155] [DEBUG] 创建文件记录: code=EZMM6D, name=广州-丰巢柜.rar
+[2025-12-12 11:10:47.157] [INFO] 文件记录创建成功: id=5d374f94-57c1-4d46-9621-26f04e67b836, code=EZMM6D, name=广州-丰巢柜.rar, size=106742642
+[2025-12-12 11:10:47.158] [INFO] [server.cjs:87] POST /api/files - 201 - ::1 - 3ms
+[2025-12-12 11:10:49.926] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-12 11:10:49.931] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 2ms
+[2025-12-12 11:10:54.377] [DEBUG] 通过取件码查询文件: code=EZMM6D
+[2025-12-12 11:10:54.377] [DEBUG] 文件查询成功: code=EZMM6D, name=广州-丰巢柜.rar
+[2025-12-12 11:10:54.378] [INFO] [server.cjs:87] GET /api/files/code/EZMM6D - 200 - ::1 - 2ms
+[2025-12-12 11:10:54.378] [DEBUG] 通过取件码查询文件: code=EZMM6D
+[2025-12-12 11:10:54.379] [DEBUG] 文件查询成功: code=EZMM6D, name=广州-丰巢柜.rar
+[2025-12-12 11:10:54.379] [INFO] [server.cjs:87] GET /api/files/code/EZMM6D - 304 - ::1 - 1ms
+[2025-12-12 11:10:55.277] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-12 11:10:55.279] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-12 11:10:59.318] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-12 11:10:59.319] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-12 11:10:59.794] [INFO] [server.cjs:87] OPTIONS /api/files/5d374f94-57c1-4d46-9621-26f04e67b836/download - 200 - ::1 - 0ms
+[2025-12-12 11:10:59.795] [DEBUG] 增加下载次数: id=5d374f94-57c1-4d46-9621-26f04e67b836
+[2025-12-12 11:10:59.796] [INFO] 下载次数已更新: id=5d374f94-57c1-4d46-9621-26f04e67b836, code=EZMM6D, 下载次数=1
+[2025-12-12 11:10:59.797] [INFO] [server.cjs:87] PATCH /api/files/5d374f94-57c1-4d46-9621-26f04e67b836/download - 200 - ::1 - 2ms
+[2025-12-12 11:11:00.079] [INFO] [server.cjs:87] GET /uploadfiles/fallback_1765509046784.rar - 200 - ::1 - 266ms
+[2025-12-12 11:11:00.282] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-12 11:11:00.285] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-12 11:11:04.312] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-12 11:11:05.271] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-12 11:11:09.322] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 1ms
+[2025-12-12 11:11:09.325] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-12 11:11:09.936] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-12 11:11:09.941] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-12 11:11:14.937] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-12 11:11:15.319] [DEBUG] 会话检查: 有效
+[2025-12-12 11:11:15.321] [INFO] [server.cjs:87] GET /api/auth/check - 304 - ::1 - 2ms
+[2025-12-12 11:11:15.324] [DEBUG] 会话检查: 有效
+[2025-12-12 11:11:15.324] [INFO] [server.cjs:87] GET /api/auth/check - 304 - ::1 - 1ms
+[2025-12-12 11:11:15.337] [DEBUG] 获取所有文件列表
+[2025-12-12 11:11:15.338] [DEBUG] 返回 1 个文件
+[2025-12-12 11:11:15.339] [INFO] [server.cjs:87] GET /api/files - 200 - ::1 - 3ms
+[2025-12-12 11:11:15.344] [DEBUG] 获取设置请求
+[2025-12-12 11:11:15.345] [DEBUG] 设置获取成功
+[2025-12-12 11:11:15.345] [INFO] [server.cjs:87] GET /api/settings - 304 - ::1 - 1ms
+[2025-12-12 11:11:19.936] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 0ms
+[2025-12-12 11:11:19.938] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 0ms
+[2025-12-12 11:43:57.195] [INFO] [server.cjs:306] =================================
+[2025-12-12 11:43:57.197] [INFO] [server.cjs:307] AirDrop-Lite 服务器已启动
+[2025-12-12 11:43:57.197] [INFO] [server.cjs:308] 端口: 3001
+[2025-12-12 11:43:57.198] [INFO] [server.cjs:309] 上传目录: C:\Users\Administrator\Desktop\Github\airdrop-lite\uploadfiles
+[2025-12-12 11:43:57.198] [INFO] [server.cjs:310] 数据目录: C:\Users\Administrator\Desktop\Github\airdrop-lite\data
+[2025-12-12 11:43:57.198] [INFO] [server.cjs:311] 日志目录: C:\Users\Administrator\Desktop\Github\airdrop-lite\logs
+[2025-12-12 11:43:57.198] [INFO] [server.cjs:312] 环境: development
+[2025-12-12 11:43:57.199] [INFO] [server.cjs:313] 日志级别: DEBUG
+[2025-12-12 11:43:57.199] [INFO] [server.cjs:314] =================================
+[2025-12-12 11:44:04.449] [INFO] [server.cjs:87] OPTIONS /api/logs/frontend - 200 - ::1 - 4ms
+[2025-12-12 11:44:04.465] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 11ms
+[2025-12-12 11:44:04.929] [WARN] [server.cjs:87] POST /api/logs/frontend - 401 - ::1 - 1ms
+[2025-12-12 11:44:06.092] [DEBUG] 会话检查: 无效或已过期
+[2025-12-12 11:44:06.094] [WARN] [server.cjs:87] GET /api/auth/check - 401 - ::1 - 3ms
+[2025-12-12 11:44:06.095] [DEBUG] 会话检查: 无效或已过期
+[2025-12-12 11:44:06.096] [WARN] [server.cjs:87] GET /api/auth/check - 401 - ::1 - 1ms
+[2025-12-12 11:44:12.090] [INFO] [server.cjs:87] OPTIONS /api/auth/verify - 200 - ::1 - 1ms
+[2025-12-12 11:44:12.093] [DEBUG] 密码验证请求
+[2025-12-12 11:44:12.145] [WARN] 密码验证失败: 密码错误
+[2025-12-12 11:44:12.146] [WARN] [server.cjs:87] POST /api/auth/verify - 401 - ::1 - 54ms
+[2025-12-12 11:44:15.767] [DEBUG] 密码验证请求
+[2025-12-12 11:44:15.820] [INFO] 密码验证成功，已创建会话: expiresAt=2025-12-19T03:44:15.820Z
+[2025-12-12 11:44:15.821] [INFO] [server.cjs:87] POST /api/auth/verify - 200 - ::1 - 54ms
+[2025-12-12 11:44:15.840] [DEBUG] 获取所有文件列表
+[2025-12-12 11:44:15.841] [DEBUG] 返回 1 个文件
+[2025-12-12 11:44:15.843] [INFO] [server.cjs:87] GET /api/files - 200 - ::1 - 3ms
+[2025-12-12 11:44:15.847] [DEBUG] 获取设置请求
+[2025-12-12 11:44:15.848] [DEBUG] 设置获取成功
+[2025-12-12 11:44:15.849] [INFO] [server.cjs:87] GET /api/settings - 304 - ::1 - 2ms
+[2025-12-12 11:44:27.729] [DEBUG] 通过取件码查询文件: code=EZMM6D
+[2025-12-12 11:44:27.730] [DEBUG] 文件查询成功: code=EZMM6D, name=广州-丰巢柜.rar
+[2025-12-12 11:44:27.731] [INFO] [server.cjs:87] GET /api/files/code/EZMM6D - 200 - ::1 - 3ms
+[2025-12-12 11:44:27.732] [DEBUG] 通过取件码查询文件: code=EZMM6D
+[2025-12-12 11:44:27.733] [DEBUG] 文件查询成功: code=EZMM6D, name=广州-丰巢柜.rar
+[2025-12-12 11:44:27.734] [INFO] [server.cjs:87] GET /api/files/code/EZMM6D - 304 - ::1 - 2ms
+[2025-12-12 11:44:29.511] [INFO] [server.cjs:87] OPTIONS /api/files/5d374f94-57c1-4d46-9621-26f04e67b836/download - 200 - ::1 - 1ms
+[2025-12-12 11:44:29.512] [DEBUG] 增加下载次数: id=5d374f94-57c1-4d46-9621-26f04e67b836
+[2025-12-12 11:44:29.513] [INFO] 下载次数已更新: id=5d374f94-57c1-4d46-9621-26f04e67b836, code=EZMM6D, 下载次数=2
+[2025-12-12 11:44:29.514] [INFO] [server.cjs:87] PATCH /api/files/5d374f94-57c1-4d46-9621-26f04e67b836/download - 200 - ::1 - 2ms
+[2025-12-12 11:44:29.804] [INFO] [server.cjs:87] GET /uploadfiles/fallback_1765509046784.rar - 200 - ::1 - 277ms
+[2025-12-12 11:50:34.736] [INFO] [server.cjs:306] =================================
+[2025-12-12 11:50:34.737] [INFO] [server.cjs:307] AirDrop-Lite 服务器已启动
+[2025-12-12 11:50:34.738] [INFO] [server.cjs:308] 端口: 3001
+[2025-12-12 11:50:34.738] [INFO] [server.cjs:309] 上传目录: C:\Users\Administrator\Desktop\Github\airdrop-lite\uploadfiles
+[2025-12-12 11:50:34.738] [INFO] [server.cjs:310] 数据目录: C:\Users\Administrator\Desktop\Github\airdrop-lite\data
+[2025-12-12 11:50:34.739] [INFO] [server.cjs:311] 日志目录: C:\Users\Administrator\Desktop\Github\airdrop-lite\logs
+[2025-12-12 11:50:34.739] [INFO] [server.cjs:312] 环境: development
+[2025-12-12 11:50:34.739] [INFO] [server.cjs:313] 日志级别: DEBUG
+[2025-12-12 11:50:34.739] [INFO] [server.cjs:314] =================================
+[2025-12-12 11:50:39.477] [DEBUG] 会话检查: 无效或已过期
+[2025-12-12 11:50:39.481] [WARN] [server.cjs:87] GET /api/auth/check - 401 - ::1 - 5ms
+[2025-12-12 11:50:39.484] [DEBUG] 会话检查: 无效或已过期
+[2025-12-12 11:50:39.485] [WARN] [server.cjs:87] GET /api/auth/check - 401 - ::1 - 2ms
+[2025-12-12 11:50:42.433] [INFO] [server.cjs:87] OPTIONS /api/auth/verify - 200 - ::1 - 0ms
+[2025-12-12 11:50:42.442] [DEBUG] 密码验证请求
+[2025-12-12 11:50:42.486] [INFO] 密码验证成功，已创建会话: expiresAt=2025-12-19T03:50:42.486Z
+[2025-12-12 11:50:42.487] [INFO] [server.cjs:87] POST /api/auth/verify - 200 - ::1 - 53ms
+[2025-12-12 11:50:42.502] [DEBUG] 获取所有文件列表
+[2025-12-12 11:50:42.503] [DEBUG] 返回 1 个文件
+[2025-12-12 11:50:42.504] [INFO] [server.cjs:87] GET /api/files - 200 - ::1 - 2ms
+[2025-12-12 11:50:42.508] [DEBUG] 获取设置请求
+[2025-12-12 11:50:42.509] [DEBUG] 设置获取成功
+[2025-12-12 11:50:42.510] [INFO] [server.cjs:87] GET /api/settings - 304 - ::1 - 2ms
+[2025-12-12 11:50:46.677] [INFO] [server.cjs:87] OPTIONS /api/files/5d374f94-57c1-4d46-9621-26f04e67b836 - 200 - ::1 - 1ms
+[2025-12-12 11:50:46.683] [DEBUG] 删除文件: id=5d374f94-57c1-4d46-9621-26f04e67b836
+[2025-12-12 11:50:46.694] [DEBUG] 已删除物理文件: fallback_1765509046784.rar
+[2025-12-12 11:50:46.695] [INFO] 文件记录删除成功: id=5d374f94-57c1-4d46-9621-26f04e67b836, code=EZMM6D, name=广州-丰巢柜.rar
+[2025-12-12 11:50:46.697] [INFO] [server.cjs:87] DELETE /api/files/5d374f94-57c1-4d46-9621-26f04e67b836 - 200 - ::1 - 14ms
+[2025-12-12 11:50:46.704] [DEBUG] 获取所有文件列表
+[2025-12-12 11:50:46.705] [DEBUG] 返回 0 个文件
+[2025-12-12 11:50:46.706] [INFO] [server.cjs:87] GET /api/files - 200 - ::1 - 2ms
+[2025-12-12 11:50:46.710] [DEBUG] 获取设置请求
+[2025-12-12 11:50:46.711] [DEBUG] 设置获取成功
+[2025-12-12 11:50:46.712] [INFO] [server.cjs:87] GET /api/settings - 304 - ::1 - 2ms
