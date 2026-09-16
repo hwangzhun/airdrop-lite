@@ -122,7 +122,7 @@ export const ReceiveView: React.FC<{ initialCode?: string }> = ({ initialCode = 
 const RouteNotice: React.FC<{ route: TransferRoute }> = ({ route }) => (
   <div className={`notice ${route === 'relay' ? 'relay' : ''}`}>
     {route === 'relay'
-      ? '直连不可用：文件将通过本站 TURN 服务端到端加密中继。'
+      ? '直连不可用：文件将通过 Cloudflare TURN 端到端加密中继。'
       : route === 'direct' ? '已建立点对点直连，文件不会经过中继服务器。' : '连接已建立，正在识别传输路径。'}
   </div>
 );

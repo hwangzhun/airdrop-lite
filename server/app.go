@@ -1,14 +1,14 @@
 package main
 
 import (
-	"crypto/hmac"
+	"bytes"
 	"crypto/rand"
-	"crypto/sha1"
 	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"mime"
 	"net"
 	"net/http"
@@ -25,7 +25,9 @@ const (
 	defaultWaitingTTL = 10 * time.Minute
 	defaultActiveTTL  = 2 * time.Hour
 	defaultRateWindow = 10 * time.Minute
+	defaultTurnTTL    = 2 * time.Hour
 	maxSignalBytes    = 32 * 1024
+	maxTurnResponse   = 64 * 1024
 	codeChars         = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"
 )
 
@@ -80,10 +82,15 @@ type limitState struct {
 }
 
 type appConfig struct {
-	staticDir  string
-	waitingTTL time.Duration
-	activeTTL  time.Duration
-	rateWindow time.Duration
+	staticDir          string
+	waitingTTL         time.Duration
+	activeTTL          time.Duration
+	rateWindow         time.Duration
+	turnCredentialsURL string
+	turnAPIToken       string
+	turnTTL            time.Duration
+	stunOnly           bool
+	httpClient         *http.Client
 }
 
 type application struct {
@@ -107,6 +114,12 @@ func newApplication(config appConfig) *application {
 	}
 	if config.rateWindow == 0 {
 		config.rateWindow = defaultRateWindow
+	}
+	if config.turnTTL == 0 {
+		config.turnTTL = defaultTurnTTL
+	}
+	if config.httpClient == nil {
+		config.httpClient = &http.Client{Timeout: 5 * time.Second}
 	}
 	app := &application{
 		rooms:       make(map[string]*room),
@@ -152,8 +165,9 @@ func (app *application) createRoom(response http.ResponseWriter, request *http.R
 		writeJSON(response, http.StatusTooManyRequests, map[string]string{"error": "请求过于频繁，请稍后再试"})
 		return
 	}
-	servers, err := iceServers(request)
+	servers, err := app.iceServers(request)
 	if err != nil {
+		log.Printf("get Cloudflare TURN credentials: %v", err)
 		writeJSON(response, http.StatusInternalServerError, map[string]string{"error": "服务暂时不可用"})
 		return
 	}
@@ -214,8 +228,9 @@ func (app *application) joinRoom(response http.ResponseWriter, request *http.Req
 	}
 	app.mu.Unlock()
 
-	servers, err := iceServers(request)
+	servers, err := app.iceServers(request)
 	if err != nil {
+		log.Printf("get Cloudflare TURN credentials: %v", err)
 		writeJSON(response, http.StatusInternalServerError, map[string]string{"error": "服务暂时不可用"})
 		return
 	}
@@ -556,35 +571,44 @@ func (app *application) serveStatic(response http.ResponseWriter, request *http.
 	http.ServeFile(response, request, file)
 }
 
-func iceServers(request *http.Request) ([]map[string]any, error) {
-	secret := os.Getenv("TURN_SECRET")
-	if secret == "" && os.Getenv("NODE_ENV") != "production" {
-		secret = "development-turn-secret"
+func (app *application) iceServers(request *http.Request) ([]map[string]any, error) {
+	if app.config.stunOnly {
+		return []map[string]any{{"urls": []string{"stun:stun.cloudflare.com:3478"}}}, nil
 	}
-	if secret == "" {
-		return nil, errors.New("TURN_SECRET is not configured")
+	if app.config.turnCredentialsURL == "" || app.config.turnAPIToken == "" {
+		return nil, errors.New("Cloudflare TURN credentials are not configured")
 	}
-	host := os.Getenv("TURN_HOST")
-	if host == "" {
-		host = request.Host
-		if parsedHost, _, err := net.SplitHostPort(host); err == nil {
-			host = parsedHost
-		}
-	}
-	port := envOrDefault("TURN_PORT", "3478")
-	expires := time.Now().Unix() + int64((2 * time.Hour).Seconds())
-	randomPart := make([]byte, 8)
-	if _, err := rand.Read(randomPart); err != nil {
+	payload, err := json.Marshal(map[string]int64{"ttl": int64(app.config.turnTTL.Seconds())})
+	if err != nil {
 		return nil, err
 	}
-	username := fmt.Sprintf("%d:%x", expires, randomPart)
-	mac := hmac.New(sha1.New, []byte(secret))
-	_, _ = mac.Write([]byte(username))
-	credential := base64.StdEncoding.EncodeToString(mac.Sum(nil))
-	return []map[string]any{{
-		"urls":     []string{"stun:" + host + ":" + port, "turn:" + host + ":" + port + "?transport=udp", "turn:" + host + ":" + port + "?transport=tcp"},
-		"username": username, "credential": credential,
-	}}, nil
+	turnRequest, err := http.NewRequestWithContext(request.Context(), http.MethodPost, app.config.turnCredentialsURL, bytes.NewReader(payload))
+	if err != nil {
+		return nil, err
+	}
+	turnRequest.Header.Set("Authorization", "Bearer "+app.config.turnAPIToken)
+	turnRequest.Header.Set("Content-Type", "application/json")
+
+	response, err := app.config.httpClient.Do(turnRequest)
+	if err != nil {
+		return nil, fmt.Errorf("request credentials: %w", err)
+	}
+	defer response.Body.Close()
+	if response.StatusCode < http.StatusOK || response.StatusCode >= http.StatusMultipleChoices {
+		_, _ = io.Copy(io.Discard, io.LimitReader(response.Body, maxTurnResponse))
+		return nil, fmt.Errorf("credentials endpoint returned %s", response.Status)
+	}
+	var decoded struct {
+		ICEServers []map[string]any `json:"iceServers"`
+	}
+	decoder := json.NewDecoder(io.LimitReader(response.Body, maxTurnResponse))
+	if err := decoder.Decode(&decoded); err != nil {
+		return nil, fmt.Errorf("decode credentials: %w", err)
+	}
+	if len(decoded.ICEServers) == 0 {
+		return nil, errors.New("credentials response contains no ICE servers")
+	}
+	return decoded.ICEServers, nil
 }
 
 func originAllowed(request *http.Request) bool {

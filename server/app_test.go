@@ -25,8 +25,39 @@ type roomResponse struct {
 
 func newTestServer(t *testing.T, config appConfig) (*application, *httptest.Server) {
 	t.Helper()
-	t.Setenv("TURN_HOST", "turn.example.test")
-	t.Setenv("TURN_SECRET", "test-secret-for-temporary-credentials")
+	turnAPI := httptest.NewServer(http.HandlerFunc(func(response http.ResponseWriter, request *http.Request) {
+		if request.Method != http.MethodPost {
+			t.Errorf("TURN credentials method = %s", request.Method)
+		}
+		if authorization := request.Header.Get("Authorization"); authorization != "Bearer test-cloudflare-turn-token" {
+			t.Errorf("TURN authorization = %q", authorization)
+		}
+		var payload map[string]int64
+		if err := json.NewDecoder(request.Body).Decode(&payload); err != nil {
+			t.Errorf("decode TURN request: %v", err)
+		}
+		if payload["ttl"] != 7200 {
+			t.Errorf("TURN ttl = %d", payload["ttl"])
+		}
+		writeJSON(response, http.StatusCreated, map[string]any{"iceServers": []map[string]any{
+			{"urls": []string{"stun:stun.cloudflare.com:3478"}},
+			{
+				"urls":       []string{"turn:turn.cloudflare.com:3478?transport=udp", "turns:turn.cloudflare.com:443?transport=tcp"},
+				"username":   "temporary-user",
+				"credential": "temporary-credential",
+			},
+		}})
+	}))
+	t.Cleanup(turnAPI.Close)
+	if config.turnCredentialsURL == "" {
+		config.turnCredentialsURL = turnAPI.URL
+	}
+	if config.turnAPIToken == "" {
+		config.turnAPIToken = "test-cloudflare-turn-token"
+	}
+	if config.httpClient == nil {
+		config.httpClient = turnAPI.Client()
+	}
 	app := newApplication(config)
 	server := httptest.NewServer(app)
 	t.Cleanup(func() {
@@ -100,21 +131,46 @@ func TestHealthAndStaticFiles(t *testing.T) {
 	}
 }
 
-func TestCreatesRoomAndReturnsTurnCredentials(t *testing.T) {
+func TestCreatesRoomAndReturnsCloudflareTurnCredentials(t *testing.T) {
 	_, server := newTestServer(t, appConfig{})
 	created := createTestRoom(t, server.URL)
 	if len(created.RoomCode) != 6 || len(created.OwnerToken) != 32 || created.ExpiresAt <= time.Now().UnixMilli() {
 		t.Fatalf("invalid room response: %+v", created)
 	}
-	if len(created.ICEServers) != 1 {
+	if len(created.ICEServers) != 2 {
 		t.Fatalf("ICE servers = %#v", created.ICEServers)
 	}
-	urls, ok := created.ICEServers[0]["urls"].([]any)
-	if !ok || !containsAnyString(urls, "turn:turn.example.test:3478?transport=udp") {
-		t.Fatalf("TURN URLs = %#v", created.ICEServers[0]["urls"])
+	urls, ok := created.ICEServers[1]["urls"].([]any)
+	if !ok || !containsAnyString(urls, "turn:turn.cloudflare.com:3478?transport=udp") || !containsAnyString(urls, "turns:turn.cloudflare.com:443?transport=tcp") {
+		t.Fatalf("TURN URLs = %#v", created.ICEServers[1]["urls"])
 	}
-	if username, _ := created.ICEServers[0]["username"].(string); !strings.Contains(username, ":") {
+	if username, _ := created.ICEServers[1]["username"].(string); username != "temporary-user" {
 		t.Fatalf("TURN username = %q", username)
+	}
+}
+
+func TestCloudflareTurnFailureDoesNotCreateRoom(t *testing.T) {
+	turnAPI := httptest.NewServer(http.HandlerFunc(func(response http.ResponseWriter, _ *http.Request) {
+		writeJSON(response, http.StatusBadGateway, map[string]string{"error": "upstream unavailable"})
+	}))
+	defer turnAPI.Close()
+	app := newApplication(appConfig{
+		turnCredentialsURL: turnAPI.URL,
+		turnAPIToken:       "test-token",
+		httpClient:         turnAPI.Client(),
+	})
+	server := httptest.NewServer(app)
+	defer server.Close()
+	defer app.shutdown()
+
+	response, _ := requestJSON(t, http.MethodPost, server.URL+"/api/rooms", "{}")
+	if response.StatusCode != http.StatusInternalServerError {
+		t.Fatalf("TURN failure status = %d", response.StatusCode)
+	}
+	app.mu.Lock()
+	defer app.mu.Unlock()
+	if len(app.rooms) != 0 {
+		t.Fatalf("rooms created after TURN failure = %d", len(app.rooms))
 	}
 }
 

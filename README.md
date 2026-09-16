@@ -1,88 +1,99 @@
 # AirDrop-Lite 点对点快传
 
-一个可完全自托管的浏览器端文件快传工具。双方通过 6 位临时取件码配对，文件优先通过 WebRTC 点对点直传；直连失败时自动使用同一 Docker 容器内的 coturn 中继。项目不依赖 Cloudflare，文件也不会写入应用服务器、数据库或对象存储。
+一个浏览器端文件快传工具。双方通过 6 位临时取件码配对，文件优先通过 WebRTC 点对点直传；直连失败时使用 Cloudflare Realtime TURN 加密中继。网站和 API 通过 Cloudflare Tunnel 暴露，服务器无需开放入站端口或公开源站 IP。
 
 ## 功能
 
 - 6 位临时房间码、分享链接和本地生成二维码
 - 接收方打开分享链接后自动连接并开始下载
 - 32 KiB 分块传输和 DataChannel 背压控制
-- 自动识别点对点直连或 TURN 中继
+- 自动识别点对点直连或 Cloudflare TURN 中继
 - 接收端 SHA-256 完整性校验，结果回传双方
 - 等待房间 10 分钟过期，活动会话最长 2 小时
-- 临时 TURN 凭据、角色令牌和按 IP 限流
+- Cloudflare 短期 TURN 凭据、角色令牌和按 IP 限流
 - 单文件最大 100 MB
 
 ## 架构
 
 ```text
-外部 HTTPS 反向代理
-        │
-        ▼
-单个 Docker 容器
-├── Go：React 静态站 + 房间 API + WebSocket 信令
-└── coturn：STUN/TURN 中继
+浏览器
+  │ HTTPS / WebSocket
+  ▼
+Cloudflare 边缘
+  │ Cloudflare Tunnel（纯出站连接）
+  ▼
+Docker Compose
+├── cloudflared
+└── Go：React 静态站 + 房间 API + WebSocket 信令
 
 发送方浏览器 ═══ WebRTC DataChannel ═══ 接收方浏览器
                     │
-              直连失败时经 coturn
+             直连失败时经
+          Cloudflare Realtime TURN
 ```
 
-Node.js 只用于本地前端开发和 Docker 的 React 构建阶段；最终生产镜像不包含 Node.js 运行时。
+Node.js 只用于本地前端开发和 Docker 的 React 构建阶段；生产运行镜像不包含 Node.js、coturn 或 cloudflared。cloudflared 作为独立 Compose 服务运行。
 
-Go 服务只转发 SDP/ICE 信令，不接收文件名、哈希或文件二进制。使用 TURN 时，coturn 转发 WebRTC 的 DTLS 加密流量，但服务器仍可观察连接元数据与流量大小。
+Go 服务只转发 SDP/ICE 信令，不接收文件名、哈希或文件二进制。Cloudflare TURN 会转发 WebRTC 的 DTLS 加密流量，但 Cloudflare 仍可观察连接元数据和流量大小。
 
-房间和限流状态只保存在内存中。容器重启会清空所有临时房间，这符合当前临时传输语义；此部署模式不支持多个容器副本。
+房间和限流状态只保存在内存中；容器重启会清空所有临时房间，且当前不支持多个应用副本。
 
-## Docker 部署
+## Cloudflare 配置
 
-要求：一台具有固定公网 IPv4 的服务器、一个解析到该服务器的域名，以及 Docker Compose。网站应由 Nginx、Caddy、Traefik 或 NAS 反向代理提供 HTTPS；代理必须支持 WebSocket。
+需要一个接入 Cloudflare 的域名、Cloudflare Tunnel、Cloudflare Realtime TURN Key 和 Docker Compose。
 
-### 1. 配置
+### 1. 创建 Tunnel
+
+1. 在 Cloudflare Dashboard 进入 **Networking > Tunnels**，创建远程管理 Tunnel。
+2. 复制 Docker 安装命令中 `eyJ...` 开头的 Tunnel Token。
+3. 为 Tunnel 添加 Published application：
+   - Hostname：`airdrop.example.com`
+   - Service type：`HTTP`
+   - URL：`airdrop-lite:8080`
+
+`airdrop-lite` 是 Compose 内部服务名，不要填 `localhost`。
+
+### 2. 创建 Realtime TURN Key
+
+在 Cloudflare Dashboard 创建 TURN Key，保存 Key ID 和 API Token。Key 本身不能发给浏览器；Go 服务会通过 Cloudflare API 为每次创建/加入房间生成默认 2 小时有效的短期凭据。
+
+### 3. 配置环境变量
 
 ```bash
 cp .env.docker.example .env
-openssl rand -hex 32
 ```
 
 编辑 `.env`：
 
 ```env
 ALLOWED_ORIGINS=https://airdrop.example.com
-TURN_HOST=airdrop.example.com
-TURN_EXTERNAL_IP=203.0.113.10
-TURN_SECRET=<上一步生成的随机值>
-TURN_REALM=airdrop.example.com
+CLOUDFLARE_TUNNEL_TOKEN=<Tunnel Token>
+CLOUDFLARE_TURN_KEY_ID=<TURN Key ID>
+CLOUDFLARE_TURN_API_TOKEN=<TURN API Token>
+CLOUDFLARE_TURN_TTL=7200
 ```
 
-- `ALLOWED_ORIGINS` 是浏览器访问网站时的完整 HTTPS origin；多个域名用逗号分隔。
-- `TURN_HOST` 必须从公网客户端解析到部署机器。
-- `TURN_EXTERNAL_IP` 必须是 Docker 宿主机的公网 IPv4。
-- `TURN_SECRET` 至少 24 个字符，只在 Go 服务与 coturn 之间共享，浏览器只会收到两小时有效的临时凭据。
+这些 Token 只能保存在服务端，不要提交 `.env` 或将 Token 放入前端环境变量。
 
-### 2. 开放端口
+### 4. 防火墙
 
-在云防火墙、安全组、宿主机防火墙和 NAT 路由器中开放或转发：
+不需要开放任何入站端口。宿主机只需能出站访问 Cloudflare：
 
-| 端口 | 协议 | 用途 |
-| --- | --- | --- |
-| `8080` | TCP | 网站/API，通常只允许反向代理访问 |
-| `3478` | TCP + UDP | STUN/TURN |
-| `49160-49200` | UDP | TURN relay 端口范围 |
+- TCP `443`：Cloudflare TURN 凭据 API 和普通 HTTPS
+- TCP/UDP `7844`：cloudflared 的 HTTP/2/QUIC Tunnel 连接
 
-若服务器位于 NAT 后，必须把上述 TURN 端口映射到 Docker 宿主机，并确保 `TURN_EXTERNAL_IP` 填写 NAT 的公网地址。
-
-### 3. 启动
+### 5. 启动
 
 ```bash
-docker compose up -d --build
+docker compose pull
+docker compose up -d
 docker compose ps
-docker compose logs -f airdrop-lite
+docker compose logs -f
 ```
 
-反向代理将 `https://airdrop.example.com` 转发到 `http://127.0.0.1:8080`。需要保留原始 `Host`，并传递 `X-Forwarded-For`；常见反向代理的 WebSocket 配置同样适用于 `/api/rooms/*/ws`。
+Compose 默认拉取 `hwangzhun/airdrop-lite:v0.0.1-beta.2` 和 `cloudflare/cloudflared:latest`。应用容器只在 Compose 内部暴露 8080，宿主机不发布任何端口。
 
-健康检查地址为 `GET /healthz`。它验证 Go 服务可用；Go 主进程同时监管 coturn，coturn 异常退出会使容器失败。实际部署后还应从外网不同网络各传输一次文件，确认页面显示“本站 TURN”时中继端口也可用。
+部署后访问 `https://airdrop.example.com/healthz`，应返回 `{"ok":true}`。还应从两个不同网络传输文件，确认直连和 Cloudflare TURN 回退均可用。
 
 ## 本地开发
 
@@ -94,7 +105,7 @@ cp .env.example .env.local
 npm run dev:all
 ```
 
-前端默认位于 `http://localhost:3000`，Go 信令服务位于 `http://localhost:8080`。本地未启动 coturn 时仍可测试房间、信令和可直连的 WebRTC 场景；完整 TURN 回退请使用 Docker 部署方式。
+前端默认位于 `http://localhost:3000`，Go 信令服务位于 `http://localhost:8080`。本地未配置 Cloudflare TURN Key 时会仅返回 Cloudflare STUN，可测试房间、信令和可直连的 WebRTC 场景。
 
 运行全部检查：
 
@@ -105,8 +116,9 @@ docker build -t airdrop-lite:local .
 
 ## 安全与运行边界
 
-- 默认按来源 IP 限制 10 分钟内创建 10 次、加入 30 次；连续 10 次无效房间码会封禁 1 小时。
-- 启用外部反向代理时固定设置 `TRUST_PROXY=true`，不要让 8080 端口直接暴露给不受信任的客户端，否则其可伪造转发 IP。
+- 生产模式缺少 Cloudflare TURN Key ID 或 API Token 时，Go 服务会拒绝启动。
+- 默认按 Cloudflare Tunnel 传递的来源 IP 限制 10 分钟内创建 10 次、加入 30 次；连续 10 次无效房间码会封禁 1 小时。
+- 应用端口只在 Compose 内部可达，`TRUST_PROXY=true` 仅用于信任 cloudflared 传递的 `X-Forwarded-For`。
 - 默认 ICE policy 为 `all`，浏览器优先直连，失败后才选择 relay candidate。
 - 房间码用于发现，192 位角色令牌用于 WebSocket 鉴权；持有分享链接即视为获得接收权限。
 - 双方必须保持页面打开；刷新、长期进入后台或网络切换会终止会话。
@@ -117,7 +129,7 @@ docker build -t airdrop-lite:local .
 ```text
 components/          二维码等前端组件
 services/p2p/        API、WebRTC 会话、哈希与传输协议
-server/              Go 房间 API、WebSocket 信令、TURN 凭据与进程监管
+server/              Go 房间 API、WebSocket 信令与 Cloudflare TURN 凭据
 views/               发送与接收状态机
 tests/               前端传输工具测试
 ```

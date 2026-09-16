@@ -16,15 +16,15 @@ COPY server ./server
 RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /out/airdrop-lite ./server
 
 FROM alpine:3.24 AS runtime
-RUN apk add --no-cache coturn \
+RUN apk add --no-cache ca-certificates \
     && addgroup -S airdrop \
     && adduser -S -D -H -G airdrop airdrop
 WORKDIR /app
-ENV NODE_ENV=production PORT=8080 TURN_PORT=3478 TURN_MIN_PORT=49160 TURN_MAX_PORT=49200
+ENV NODE_ENV=production PORT=8080
 COPY --from=web-build --chown=airdrop:airdrop /app/dist ./dist
 COPY --from=server-build --chown=airdrop:airdrop /out/airdrop-lite ./airdrop-lite
 USER airdrop
-EXPOSE 8080/tcp 3478/tcp 3478/udp 49160-49200/udp
+EXPOSE 8080/tcp
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
   CMD ["/app/airdrop-lite", "healthcheck"]
-ENTRYPOINT ["/app/airdrop-lite", "serve", "--with-turn"]
+ENTRYPOINT ["/app/airdrop-lite", "serve"]

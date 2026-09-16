@@ -3,32 +3,47 @@ package main
 import (
 	"strings"
 	"testing"
+	"time"
 )
 
-func TestValidateTurnEnvironment(t *testing.T) {
-	t.Setenv("NODE_ENV", "production")
-	t.Setenv("TURN_HOST", "turn.example.test")
-	t.Setenv("TURN_SECRET", "too-short")
-	if err := validateTurnEnvironment(); err == nil {
-		t.Fatal("short production TURN secret was accepted")
+func TestCloudflareTurnConfig(t *testing.T) {
+	t.Setenv("CLOUDFLARE_TURN_KEY_ID", "test/key")
+	t.Setenv("CLOUDFLARE_TURN_API_TOKEN", "test-token")
+	t.Setenv("CLOUDFLARE_TURN_TTL", "3600")
+	endpoint, token, ttl, stunOnly, err := cloudflareTurnConfig()
+	if err != nil {
+		t.Fatal(err)
 	}
-
-	t.Setenv("TURN_SECRET", "test-secret-long-enough-for-production")
-	if err := validateTurnEnvironment(); err != nil {
-		t.Fatalf("valid TURN environment rejected: %v", err)
+	if !strings.Contains(endpoint, "/test%2Fkey/credentials/generate-ice-servers") {
+		t.Fatalf("TURN endpoint = %q", endpoint)
+	}
+	if token != "test-token" || ttl != time.Hour || stunOnly {
+		t.Fatalf("TURN config token=%q ttl=%s stunOnly=%t", token, ttl, stunOnly)
 	}
 }
 
-func TestTurnCommandUsesSharedSecretAuthentication(t *testing.T) {
-	t.Setenv("TURN_HOST", "turn.example.test")
-	t.Setenv("TURN_SECRET", "test-secret-long-enough-for-production")
-	arguments := strings.Join(turnCommand().Args, " ")
-	if !strings.Contains(arguments, "--use-auth-secret") {
-		t.Fatalf("turnserver arguments do not enable shared-secret authentication: %s", arguments)
+func TestCloudflareTurnConfigRequiresCredentials(t *testing.T) {
+	t.Setenv("CLOUDFLARE_TURN_KEY_ID", "")
+	t.Setenv("CLOUDFLARE_TURN_API_TOKEN", "")
+	t.Setenv("NODE_ENV", "production")
+	if _, _, _, _, err := cloudflareTurnConfig(); err == nil {
+		t.Fatal("missing Cloudflare TURN credentials were accepted")
 	}
-	for _, unwanted := range []string{"--no-cli", "--lt-cred-mech"} {
-		if strings.Contains(arguments, unwanted) {
-			t.Fatalf("turnserver arguments contain obsolete option %q: %s", unwanted, arguments)
-		}
+
+	t.Setenv("CLOUDFLARE_TURN_KEY_ID", "test-key")
+	t.Setenv("CLOUDFLARE_TURN_API_TOKEN", "test-token")
+	t.Setenv("CLOUDFLARE_TURN_TTL", "invalid")
+	if _, _, _, _, err := cloudflareTurnConfig(); err == nil {
+		t.Fatal("invalid Cloudflare TURN TTL was accepted")
+	}
+}
+
+func TestCloudflareTurnConfigAllowsLocalStunOnlyMode(t *testing.T) {
+	t.Setenv("NODE_ENV", "")
+	t.Setenv("CLOUDFLARE_TURN_KEY_ID", "")
+	t.Setenv("CLOUDFLARE_TURN_API_TOKEN", "")
+	endpoint, token, ttl, stunOnly, err := cloudflareTurnConfig()
+	if err != nil || endpoint != "" || token != "" || ttl != defaultTurnTTL || !stunOnly {
+		t.Fatalf("local TURN config endpoint=%q token=%q ttl=%s stunOnly=%t err=%v", endpoint, token, ttl, stunOnly, err)
 	}
 }

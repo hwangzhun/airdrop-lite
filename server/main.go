@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
-	"os/exec"
 	"os/signal"
 	"strconv"
 	"syscall"
@@ -21,8 +21,7 @@ func main() {
 	}
 	switch command {
 	case "serve":
-		withTurn := len(os.Args) > 2 && os.Args[2] == "--with-turn"
-		if err := serve(withTurn); err != nil {
+		if err := serve(); err != nil {
 			log.Fatal(err)
 		}
 	case "healthcheck":
@@ -34,14 +33,19 @@ func main() {
 	}
 }
 
-func serve(withTurn bool) error {
-	if withTurn {
-		if err := validateTurnEnvironment(); err != nil {
-			return err
-		}
+func serve() error {
+	turnURL, turnToken, turnTTL, stunOnly, err := cloudflareTurnConfig()
+	if err != nil {
+		return err
 	}
 
-	app := newApplication(appConfig{staticDir: envOrDefault("STATIC_DIR", "dist")})
+	app := newApplication(appConfig{
+		staticDir:          envOrDefault("STATIC_DIR", "dist"),
+		turnCredentialsURL: turnURL,
+		turnAPIToken:       turnToken,
+		turnTTL:            turnTTL,
+		stunOnly:           stunOnly,
+	})
 	defer app.shutdown()
 	server := &http.Server{
 		Addr:              ":" + envOrDefault("PORT", "8080"),
@@ -58,18 +62,6 @@ func serve(withTurn bool) error {
 		serverErrors <- server.ListenAndServe()
 	}()
 
-	var turn *exec.Cmd
-	var turnErrors chan error
-	if withTurn {
-		turn = turnCommand()
-		turn.Stdout, turn.Stderr = os.Stdout, os.Stderr
-		if err := turn.Start(); err != nil {
-			return fmt.Errorf("start turnserver: %w", err)
-		}
-		turnErrors = make(chan error, 1)
-		go func() { turnErrors <- turn.Wait() }()
-	}
-
 	var result error
 	select {
 	case <-ctx.Done():
@@ -78,54 +70,32 @@ func serve(withTurn bool) error {
 		if !errors.Is(err, http.ErrServerClosed) {
 			result = fmt.Errorf("http server stopped: %w", err)
 		}
-	case err := <-turnErrors:
-		result = fmt.Errorf("turnserver stopped: %w", err)
-		turn = nil
 	}
 
 	shutdownContext, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	_ = server.Shutdown(shutdownContext)
-	if turn != nil && turn.Process != nil {
-		_ = turn.Process.Signal(syscall.SIGTERM)
-		select {
-		case <-turnErrors:
-		case <-time.After(5 * time.Second):
-			_ = turn.Process.Kill()
-		}
-	}
 	return result
 }
 
-func validateTurnEnvironment() error {
-	secret := os.Getenv("TURN_SECRET")
-	if secret == "" {
-		return errors.New("TURN_SECRET must be set")
+func cloudflareTurnConfig() (string, string, time.Duration, bool, error) {
+	keyID := os.Getenv("CLOUDFLARE_TURN_KEY_ID")
+	token := os.Getenv("CLOUDFLARE_TURN_API_TOKEN")
+	if keyID == "" && token == "" && os.Getenv("NODE_ENV") != "production" {
+		return "", "", defaultTurnTTL, true, nil
 	}
-	if os.Getenv("TURN_HOST") == "" {
-		return errors.New("TURN_HOST must be set to the public TURN hostname or IP")
+	if keyID == "" {
+		return "", "", 0, false, errors.New("CLOUDFLARE_TURN_KEY_ID must be set")
 	}
-	if os.Getenv("NODE_ENV") == "production" && len(secret) < 24 {
-		return errors.New("TURN_SECRET must contain at least 24 characters in production")
+	if token == "" {
+		return "", "", 0, false, errors.New("CLOUDFLARE_TURN_API_TOKEN must be set")
 	}
-	return nil
-}
-
-func turnCommand() *exec.Cmd {
-	arguments := []string{
-		"-n", "--fingerprint", "--use-auth-secret",
-		"--static-auth-secret=" + os.Getenv("TURN_SECRET"),
-		"--realm=" + envOrDefault("TURN_REALM", os.Getenv("TURN_HOST")),
-		"--listening-port=" + envOrDefault("TURN_PORT", "3478"),
-		"--min-port=" + envOrDefault("TURN_MIN_PORT", "49160"),
-		"--max-port=" + envOrDefault("TURN_MAX_PORT", "49200"),
-		"--no-tls", "--no-dtls", "--no-multicast-peers", "--no-rfc5780",
-		"--stale-nonce=600", "--pidfile=/tmp/turnserver.pid", "--log-file=stdout", "--simple-log",
+	ttlSeconds, err := strconv.Atoi(envOrDefault("CLOUDFLARE_TURN_TTL", "7200"))
+	if err != nil || ttlSeconds <= 0 {
+		return "", "", 0, false, errors.New("CLOUDFLARE_TURN_TTL must be a positive number of seconds")
 	}
-	if externalIP := os.Getenv("TURN_EXTERNAL_IP"); externalIP != "" {
-		arguments = append(arguments, "--external-ip="+externalIP)
-	}
-	return exec.Command("turnserver", arguments...)
+	endpoint := "https://rtc.live.cloudflare.com/v1/turn/keys/" + url.PathEscape(keyID) + "/credentials/generate-ice-servers"
+	return endpoint, token, time.Duration(ttlSeconds) * time.Second, false, nil
 }
 
 func healthcheck() error {

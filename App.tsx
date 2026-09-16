@@ -37,7 +37,7 @@ const App: React.FC = () => {
         {location.view === 'send' ? <SendView /> : <ReceiveView initialCode={location.code} />}
       </main>
       <footer>
-        <p>文件优先点对点直传，直连失败时通过本站 TURN 服务加密中继。</p>
+        <p>文件优先点对点直传，直连失败时通过 Cloudflare TURN 加密中继。</p>
         <p>双方需保持页面打开 · 单文件最大 100 MB</p>
       </footer>
     </div>

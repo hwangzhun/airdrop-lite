@@ -1,5 +1,5 @@
 {
   "name": "AirDrop-Lite",
-  "description": "通过 WebRTC 点对点直传并支持自托管 TURN 回退的轻量文件传输工具。",
+  "description": "通过 WebRTC 点对点直传并支持 Cloudflare TURN 回退的轻量文件传输工具。",
   "requestFramePermissions": []
 }
