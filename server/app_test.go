@@ -311,6 +311,28 @@ func TestOriginBodyLimitRateLimitAndExpiry(t *testing.T) {
 	}
 }
 
+func TestOriginAllowsPublicSameOriginDespiteAdditionalAllowlist(t *testing.T) {
+	t.Setenv("ALLOWED_ORIGINS", "https://other.example/")
+	request := httptest.NewRequest(http.MethodPost, "http://airdrop-lite:8080/api/rooms", nil)
+	request.Host = "airdrop-lite:8080"
+	request.Header.Set("Origin", "https://airdrop-lite.hwangzhun.com")
+	request.Header.Set("X-Forwarded-Host", "airdrop-lite.hwangzhun.com")
+	request.Header.Set("X-Forwarded-Proto", "https")
+	if !originAllowed(request) {
+		t.Fatal("public same-origin request was rejected")
+	}
+
+	request.Header.Set("Origin", "http://airdrop-lite.hwangzhun.com")
+	if originAllowed(request) {
+		t.Fatal("origin with a mismatched forwarded scheme was accepted")
+	}
+
+	request.Header.Set("Origin", "https://other.example")
+	if !originAllowed(request) {
+		t.Fatal("configured additional origin was rejected")
+	}
+}
+
 func assertMessageType(t *testing.T, connection *websocket.Conn, expected string) {
 	t.Helper()
 	_ = connection.SetReadDeadline(time.Now().Add(2 * time.Second))

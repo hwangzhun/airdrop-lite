@@ -91,7 +91,7 @@ docker compose ps
 docker compose logs -f
 ```
 
-Compose 默认拉取 `hwangzhun/airdrop-lite:v0.0.1-beta.3` 和 `cloudflare/cloudflared:latest`。应用容器只在 Compose 内部暴露 8080，宿主机不发布任何端口。
+Compose 默认拉取 `hwangzhun/airdrop-lite:v0.0.1-beta.4` 和 `cloudflare/cloudflared:latest`。应用容器只在 Compose 内部暴露 8080，宿主机不发布任何端口。
 
 部署后访问 `https://airdrop.example.com/healthz`，应返回 `{"ok":true}`。还应从两个不同网络传输文件，确认直连和 Cloudflare TURN 回退均可用。
 

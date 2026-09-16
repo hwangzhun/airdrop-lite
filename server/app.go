@@ -620,23 +620,39 @@ func originAllowed(request *http.Request) bool {
 	if origin == "" {
 		return true
 	}
-	if configured := splitNonEmpty(os.Getenv("ALLOWED_ORIGINS")); len(configured) > 0 {
-		for _, allowed := range configured {
-			if origin == allowed {
-				return true
-			}
-		}
-		return false
-	}
 	originRequest, err := http.NewRequest(http.MethodGet, origin, nil)
-	if err != nil {
+	if err != nil || originRequest.URL.Host == "" {
 		return false
 	}
 	host := request.Header.Get("X-Forwarded-Host")
 	if host == "" {
 		host = request.Host
 	}
-	return originRequest.URL.Host == host
+	proto := request.Header.Get("X-Forwarded-Proto")
+	if comma := strings.IndexByte(proto, ','); comma >= 0 {
+		proto = proto[:comma]
+	}
+	proto = strings.TrimSpace(proto)
+	if proto == "" {
+		if request.TLS != nil {
+			proto = "https"
+		} else {
+			proto = "http"
+		}
+	}
+	// The public request's own origin is always valid. ALLOWED_ORIGINS adds
+	// trusted origins; it must not accidentally deny the site itself.
+	if strings.EqualFold(originRequest.URL.Scheme, proto) && strings.EqualFold(originRequest.URL.Host, host) {
+		return true
+	}
+	if configured := splitNonEmpty(os.Getenv("ALLOWED_ORIGINS")); len(configured) > 0 {
+		for _, allowed := range configured {
+			if strings.EqualFold(strings.TrimRight(origin, "/"), strings.TrimRight(allowed, "/")) {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 func requestIP(request *http.Request) string {

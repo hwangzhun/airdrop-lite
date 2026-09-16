@@ -1,6 +1,6 @@
 services:
   airdrop-lite:
-    image: ${AIRDROP_IMAGE:-hwangzhun/airdrop-lite:v0.0.1-beta.3}
+    image: ${AIRDROP_IMAGE:-hwangzhun/airdrop-lite:v0.0.1-beta.4}
     pull_policy: always
     restart: unless-stopped
     environment:
