@@ -133,7 +133,11 @@ func newApplication(config appConfig) *application {
 }
 
 func (app *application) ServeHTTP(response http.ResponseWriter, request *http.Request) {
-	if !originAllowed(request) {
+	// Origin validation protects state-changing API and WebSocket requests. Static
+	// ES modules can legitimately include an Origin header (Vite marks its entry
+	// script as crossorigin), so applying this check globally can make the HTML
+	// load while its JS and CSS fail with 403.
+	if strings.HasPrefix(request.URL.Path, "/api/") && !originAllowed(request) {
 		writeJSON(response, http.StatusForbidden, map[string]string{"error": "不允许的来源"})
 		return
 	}

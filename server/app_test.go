@@ -121,6 +121,18 @@ func TestHealthAndStaticFiles(t *testing.T) {
 		t.Fatalf("SPA fallback failed: %d %q", response.StatusCode, body)
 	}
 
+	request, _ := http.NewRequest(http.MethodGet, server.URL+"/app.js", nil)
+	request.Header.Set("Origin", "https://evil.example")
+	response, err = http.DefaultClient.Do(request)
+	if err != nil {
+		t.Fatal(err)
+	}
+	body, _ = io.ReadAll(response.Body)
+	response.Body.Close()
+	if response.StatusCode != http.StatusOK || string(body) != "export{}" {
+		t.Fatalf("static module with origin = %d, body = %q", response.StatusCode, body)
+	}
+
 	response, err = http.Get(server.URL + "/app.js")
 	if err != nil {
 		t.Fatal(err)
