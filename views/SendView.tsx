@@ -1,281 +1,169 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { saveFile, getSettings } from '../services/storageService';
-import { FileRecord, StorageType } from '../types';
-import { UploadIcon, FileIcon } from '../components/Icons';
-import { logger } from '../services/logger';
+import React, { useEffect, useRef, useState } from 'react';
+import { QrCode } from '../components/QrCode';
+import { createRoom, websocketUrl } from '../services/p2p/api';
+import { sha256Blob, validateFile } from '../services/p2p/hash';
+import { PeerTransferSession } from '../services/p2p/PeerTransferSession';
+import type { TransferRoute } from '../types';
+
+type Stage = 'idle' | 'preparing' | 'waiting' | 'connecting' | 'ready' | 'transferring' | 'checking' | 'complete' | 'error';
+
+function formatBytes(bytes: number): string {
+  if (bytes === 0) return '0 B';
+  const units = ['B', 'KB', 'MB'];
+  const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+  return `${(bytes / 1024 ** index).toFixed(index ? 1 : 0)} ${units[index]}`;
+}
 
 export const SendView: React.FC = () => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState<FileRecord | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [storageType, setStorageType] = useState<StorageType>(StorageType.LOCAL_FILE);
-  const [defaultExpireDays, setDefaultExpireDays] = useState<number>(7);
-  const [copiedCode, setCopiedCode] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadStatus, setUploadStatus] = useState<string>('');
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [stage, setStage] = useState<Stage>('idle');
+  const [file, setFile] = useState<File>();
+  const [roomCode, setRoomCode] = useState('');
+  const [route, setRoute] = useState<TransferRoute>('unknown');
+  const [progress, setProgress] = useState(0);
+  const [error, setError] = useState('');
+  const [dragging, setDragging] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const sessionRef = useRef<PeerTransferSession | undefined>(undefined);
 
-  useEffect(() => {
-    const settings = getSettings();
-    setStorageType(settings.storageType || StorageType.LOCAL_FILE);
-    setDefaultExpireDays(settings.defaultExpireDays || 7);
-  }, []);
+  useEffect(() => () => sessionRef.current?.close(), []);
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-
-  const processFile = async (file: File) => {
-    setIsUploading(true);
-    setError(null);
-    setUploadProgress(0);
-    setUploadStatus('准备中...');
-    
-    logger.performanceStart('file_upload');
-    logger.info(`开始处理文件上传: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
-    
-    // 前端文件大小验证
-    const settings = getSettings();
-    const maxFileSizeBytes = (settings.maxFileSizeMB || 100) * 1024 * 1024;
-    if (file.size > maxFileSizeBytes) {
-      const errorMsg = `文件大小超过限制。最大允许: ${settings.maxFileSizeMB || 100}MB`;
-      logger.warn(`文件上传失败: ${errorMsg}`, { fileName: file.name, fileSize: file.size });
-      setError(errorMsg);
-      setIsUploading(false);
-      setUploadProgress(0);
-      setUploadStatus('');
-      return;
-    }
-    
+  const chooseFile = (next?: File) => {
+    if (!next) return;
     try {
-      const record = await saveFile(file, (progress, status) => {
-        setUploadProgress(progress);
-        setUploadStatus(status);
-      });
-      logger.performanceEnd('file_upload');
-      logger.info(`文件上传成功: ${record.name}`, { 
-        code: record.code, 
-        id: record.id, 
-        size: record.size,
-        storageType: record.storageType 
-      });
-      setUploadedFile(record);
-      setIsUploading(false);
-    } catch (err: any) {
-      logger.performanceEnd('file_upload');
-      logger.exception(err, `文件上传失败: ${file.name}`);
-      setError(err.message || '上传失败');
-      setIsUploading(false);
-      setUploadProgress(0);
-      setUploadStatus('');
+      validateFile(next);
+      setFile(next);
+      setError('');
+    } catch (reason) {
+      setFile(undefined);
+      setError(reason instanceof Error ? reason.message : '文件不可用');
     }
   };
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      processFile(e.dataTransfer.files[0]);
-    }
-  };
-
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      processFile(e.target.files[0]);
+  const start = async () => {
+    if (!file) return;
+    setStage('preparing');
+    setError('');
+    try {
+      const hash = await sha256Blob(file);
+      const room = await createRoom();
+      sessionStorage.setItem(`airdrop-owner-${room.roomCode}`, room.ownerToken);
+      setRoomCode(room.roomCode);
+      const session = new PeerTransferSession('sender', room.iceServers, {
+        onJoinRequest: () => {
+          setStage('connecting');
+          sessionRef.current?.approveJoin();
+        },
+        onConnected: currentRoute => {
+          setRoute(currentRoute);
+          setStage('ready');
+        },
+        onRoute: setRoute,
+        onProgress: value => {
+          setProgress(value);
+          setStage(value >= 100 ? 'checking' : 'transferring');
+        },
+        onComplete: () => {
+          setStage('complete');
+          sessionStorage.removeItem(`airdrop-owner-${room.roomCode}`);
+        },
+        onVerificationFailed: () => {
+          setError('接收方文件校验失败，请重新传输');
+          setStage('error');
+        },
+        onPeerLeft: () => {
+          setError('接收方已离开房间');
+          setStage('error');
+        },
+        onError: message => {
+          setError(message);
+          setStage('error');
+        },
+      }, file, hash);
+      sessionRef.current = session;
+      await session.connectSignal(websocketUrl(room.roomCode, 'sender', room.ownerToken));
+      setStage('waiting');
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : '创建房间失败');
+      setStage('error');
     }
   };
 
   const reset = () => {
-    setUploadedFile(null);
-    setError(null);
-    setCopiedCode(false);
-    setUploadProgress(0);
-    setUploadStatus('');
-    if (fileInputRef.current) fileInputRef.current.value = '';
+    sessionRef.current?.close();
+    sessionRef.current = undefined;
+    setStage('idle'); setFile(undefined); setRoomCode('');
+    setProgress(0); setError('');
+    if (inputRef.current) inputRef.current.value = '';
   };
 
-  const handleCopyCode = async () => {
-    if (!uploadedFile) return;
+  const shareLink = roomCode ? `${window.location.href.split('#')[0]}#receive?code=${roomCode}` : '';
+  const share = async () => {
     try {
-      await navigator.clipboard.writeText(uploadedFile.code);
-      logger.debug(`复制取件码: ${uploadedFile.code}`);
-      setCopiedCode(true);
-      setTimeout(() => setCopiedCode(false), 2000);
-    } catch (error) {
-      // Fallback for older browsers
-      const textArea = document.createElement('textarea');
-      textArea.value = uploadedFile.code;
-      textArea.style.position = 'fixed';
-      textArea.style.opacity = '0';
-      document.body.appendChild(textArea);
-      textArea.select();
-      try {
-        document.execCommand('copy');
-        logger.debug(`复制取件码 (fallback): ${uploadedFile.code}`);
-        setCopiedCode(true);
-        setTimeout(() => setCopiedCode(false), 2000);
-      } catch (err) {
-        logger.warn('复制取件码失败', err);
-        alert('复制失败，请手动复制');
-      }
-      document.body.removeChild(textArea);
+      if (navigator.share) await navigator.share({ title: 'AirDrop-Lite 文件接收', text: `取件码：${roomCode}`, url: shareLink });
+      else await navigator.clipboard.writeText(shareLink);
+    } catch (reason) {
+      if (reason instanceof DOMException && reason.name === 'AbortError') return;
+      setError('分享失败，请手动复制页面链接');
     }
   };
 
-  if (uploadedFile) {
-    const shareLink = `${window.location.origin}${window.location.pathname}#receive?code=${uploadedFile.code}`;
-
-    return (
-      <div className="max-w-md mx-auto animate-fade-in">
-        <div className="bg-white rounded-2xl p-8 shadow-sm border border-zinc-100 text-center">
-          <div className="w-16 h-16 bg-green-50 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
-            <UploadIcon className="w-8 h-8" />
-          </div>
-          <h2 className="text-2xl font-semibold text-zinc-900 mb-2">准备分享！</h2>
-          <p className="text-zinc-500 mb-8">将取件码或链接分享给接收方。</p>
-
-          <div className="bg-zinc-50 p-6 rounded-xl mb-6 border border-zinc-100 relative">
-            <div 
-              onClick={handleCopyCode}
-              className="text-4xl font-mono font-bold tracking-widest text-zinc-900 mb-2 cursor-pointer hover:text-black transition-colors relative inline-block"
-              title="点击复制取件码"
-            >
-              {uploadedFile.code}
-              {copiedCode && (
-                <span className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50 pointer-events-none">
-                  已复制
-                </span>
-              )}
-            </div>
-            <div className="text-xs uppercase tracking-wide text-zinc-400 font-medium">取件码</div>
-          </div>
-
-          <div className="mb-6 text-left">
-            <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wide mb-2 block">直连链接</label>
-            <div className="flex">
-              <input 
-                readOnly 
-                value={shareLink}
-                className="flex-1 bg-zinc-50 border border-zinc-200 text-zinc-600 text-sm rounded-l-lg px-3 py-2 focus:outline-none"
-              />
-              <button 
-                onClick={() => navigator.clipboard.writeText(shareLink)}
-                className="bg-black text-white text-sm font-medium px-4 rounded-r-lg hover:bg-zinc-800 transition-colors"
-              >
-                复制
-              </button>
-            </div>
-          </div>
-
-          <button 
-            onClick={reset}
-            className="text-sm text-zinc-400 hover:text-zinc-900 font-medium transition-colors"
-          >
-            发送其他文件
-          </button>
-
-          {/* 免责声明 */}
-          <div className="mt-6 p-4 border border-gray-200 rounded-xl text-xs text-gray-500">
-            <div className="font-semibold mb-2">免责声明</div>
-            <div className="space-y-1 text-gray-500 leading-relaxed">
-              <p>• 本服务仅提供文件传输功能，不保证文件的存储时间，文件可能因系统维护、存储空间限制或其他原因被提前删除。</p>
-              <p>• 请勿上传涉及隐私、敏感或违法的内容，服务提供者不对用户上传的文件内容负责。</p>
-              <p>• 建议及时下载文件，服务提供者不对因文件丢失、损坏或无法访问造成的任何损失承担责任。</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  if (stage === 'complete') return (
+    <section className="card stack" aria-live="polite">
+      <div className="complete-mark">✓</div>
+      <div className="hero"><h1>传输已结束</h1><p>文件已经过接收方 SHA-256 校验，可以退出本网站。</p></div>
+      <button className="secondary" onClick={reset}>发送其他文件</button>
+    </section>
+  );
 
   return (
-    <div className="max-w-md mx-auto">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold tracking-tight text-zinc-900">发送文件</h2>
-        <p className="text-zinc-500 mt-2">简单、安全、临时的文件分享工具。</p>
+    <section>
+      <div className="hero"><h1>发送文件</h1><p>选择文件，生成一个临时取件码。</p></div>
+      <div className="card stack">
+        {stage === 'idle' && <>
+          <label className={`drop-zone ${dragging ? 'dragging' : ''}`}
+            onDragOver={event => { event.preventDefault(); setDragging(true); }}
+            onDragLeave={() => setDragging(false)}
+            onDrop={event => { event.preventDefault(); setDragging(false); chooseFile(event.dataTransfer.files[0]); }}>
+            <input ref={inputRef} className="hidden-input" type="file" onChange={event => chooseFile(event.target.files?.[0])} />
+            <span className="drop-icon">↑</span>
+            <strong>{file ? file.name : '点击或拖入文件'}</strong>
+            <span className="muted">{file ? formatBytes(file.size) : '单文件最大 100 MB'}</span>
+          </label>
+          <button className="primary" disabled={!file} onClick={start}>创建传输房间</button>
+        </>}
+
+        {stage === 'preparing' && <p className="status">正在计算文件哈希并创建安全房间…</p>}
+
+        {stage === 'waiting' && <>
+          <div><p className="status">临时取件码</p><div className="room-code">{roomCode}</div></div>
+          <QrCode value={shareLink} />
+          <button className="secondary" onClick={() => void share()}>分享接收链接</button>
+          <div className="file-summary"><strong>{file?.name}</strong><span>{file && formatBytes(file.size)}</span></div>
+          <p className="status">把链接发给对方即可，打开后会自动开始传输。房间将在 10 分钟后失效…</p>
+        </>}
+
+        {stage === 'connecting' && <p className="status">正在协商点对点连接，必要时自动使用 TURN…</p>}
+
+        {stage === 'ready' && <><RouteNotice route={route} /><p className="status">接收方已连接，正在自动开始传输…</p></>}
+
+        {['transferring', 'checking'].includes(stage) && <>
+          <RouteNotice route={route} />
+          <div className="file-summary"><strong>{file?.name}</strong><span>{file && formatBytes(file.size)}</span></div>
+          <div className="progress-track"><div className="progress-bar" style={{ width: `${progress}%` }} /></div>
+          <p className="status">{stage === 'checking' ? '发送完成，等待接收方校验…' : `正在发送 ${progress}%`}</p>
+        </>}
+
+        {stage === 'error' && <><p className="status error">{error}</p><button className="secondary" onClick={reset}>重新开始</button></>}
+        {error && stage === 'idle' && <p className="status error">{error}</p>}
       </div>
-
-      <div
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        className={`
-          relative group cursor-pointer
-          border-2 border-dashed rounded-3xl p-12 text-center transition-all duration-200
-          ${isDragging 
-            ? 'border-black bg-zinc-50 scale-[1.02]' 
-            : 'border-zinc-200 hover:border-zinc-400 hover:bg-zinc-50/50'
-          }
-          ${isUploading ? 'opacity-50 pointer-events-none' : ''}
-        `}
-        onClick={() => fileInputRef.current?.click()}
-      >
-        <input 
-          type="file" 
-          ref={fileInputRef} 
-          className="hidden" 
-          onChange={handleFileSelect} 
-        />
-        
-        <div className="w-16 h-16 bg-zinc-100 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-white group-hover:shadow-sm transition-all">
-          <UploadIcon className="w-8 h-8 text-zinc-400 group-hover:text-black transition-colors" />
-        </div>
-        
-        <h3 className="text-lg font-medium text-zinc-900 mb-2">
-          {isDragging ? '拖放到这里' : '点击或拖拽上传文件'}
-        </h3>
-        <p className="text-sm text-zinc-400 px-8">
-          {storageType === StorageType.LOCAL_FILE && `文件将暂存到服务器，${defaultExpireDays}天后自动删除。`}
-          <br />
-          最大上传文件大小: {getSettings().maxFileSizeMB || 100}MB
-        </p>
-      </div>
-
-      {/* 免责声明 */}
-      <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-500">
-        <div className="font-semibold mb-2">免责声明</div>
-        <div className="space-y-1 text-gray-500 leading-relaxed">
-          <p>• 本服务仅提供文件传输功能，不保证文件的存储时间，文件可能因系统维护、存储空间限制或其他原因被提前删除。</p>
-          <p>• 请勿上传涉及隐私、敏感或违法的内容，服务提供者不对用户上传的文件内容负责。</p>
-          <p>• 建议及时下载文件，服务提供者不对因文件丢失、损坏或无法访问造成的任何损失承担责任。</p>
-          <p>• 使用本服务即表示您已阅读并同意以上免责条款。</p>
-        </div>
-      </div>
-
-      {isUploading && (
-        <div className="mt-8">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-zinc-100">
-            <div className="mb-4">
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-sm font-medium text-zinc-900">{uploadStatus || '上传中...'}</p>
-                <p className="text-sm font-semibold text-zinc-600">{uploadProgress}%</p>
-              </div>
-              <div className="w-full bg-zinc-100 rounded-full h-2.5 overflow-hidden">
-                <div 
-                  className="bg-black h-2.5 rounded-full transition-all duration-300 ease-out"
-                  style={{ width: `${uploadProgress}%` }}
-                ></div>
-              </div>
-            </div>
-            <div className="flex items-center justify-center text-xs text-zinc-400">
-              <div className="inline-block w-3 h-3 border-2 border-zinc-200 border-t-black rounded-full animate-spin mr-2"></div>
-              请稍候，文件正在上传
-            </div>
-          </div>
-        </div>
-      )}
-
-      {error && (
-        <div className="mt-6 p-4 bg-red-50 text-red-600 rounded-xl text-sm border border-red-100 text-center">
-          {error}
-        </div>
-      )}
-    </div>
+    </section>
   );
 };
+
+const RouteNotice: React.FC<{ route: TransferRoute }> = ({ route }) => (
+  <div className={`notice ${route === 'relay' ? 'relay' : ''}`}>
+    {route === 'relay'
+      ? '直连不可用：文件将通过本站 TURN 服务端到端加密中继。'
+      : route === 'direct' ? '已建立点对点直连，文件不会经过中继服务器。' : '连接已建立，正在识别传输路径。'}
+  </div>
+);

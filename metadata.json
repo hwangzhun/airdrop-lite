@@ -1,5 +1,5 @@
 {
   "name": "AirDrop-Lite",
-  "description": "极简、安全的文件传输工具，支持AI文件分析。",
+  "description": "通过 WebRTC 点对点直传并支持自托管 TURN 回退的轻量文件传输工具。",
   "requestFramePermissions": []
 }

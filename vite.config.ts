@@ -12,14 +12,13 @@ export default defineConfig(({ mode }) => {
     const version = packageJson.version;
     
     return {
+      base: './',
       server: {
         port: 3000,
         host: '0.0.0.0',
       },
       plugins: [react()],
-      define: {
-        'import.meta.env.VITE_APP_VERSION': JSON.stringify(version),
-      },
+      define: { 'import.meta.env.VITE_APP_VERSION': JSON.stringify(version) },
       resolve: {
         alias: {
           '@': path.resolve(__dirname, '.'),
@@ -43,18 +42,6 @@ export default defineConfig(({ mode }) => {
         // 代码分割配置
         rollupOptions: {
           output: {
-            // 手动分包策略
-            manualChunks: (id) => {
-              // 将 node_modules 中的依赖单独打包
-              if (id.includes('node_modules')) {
-                // React 相关库单独打包
-                if (id.includes('react') || id.includes('react-dom')) {
-                  return 'react-vendor';
-                }
-                // 其他第三方库打包到一起
-                return 'vendor';
-              }
-            },
             // 输出文件命名
             chunkFileNames: 'assets/js/[name]-[hash].js',
             entryFileNames: 'assets/js/[name]-[hash].js',

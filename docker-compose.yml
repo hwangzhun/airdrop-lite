@@ -1,0 +1,21 @@
+services:
+  airdrop-lite:
+    build: .
+    image: airdrop-lite:local
+    restart: unless-stopped
+    environment:
+      PORT: 8080
+      TRUST_PROXY: "true"
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-}
+      TURN_HOST: ${TURN_HOST:?Set TURN_HOST in .env}
+      TURN_EXTERNAL_IP: ${TURN_EXTERNAL_IP:?Set TURN_EXTERNAL_IP in .env}
+      TURN_SECRET: ${TURN_SECRET:?Set TURN_SECRET in .env}
+      TURN_REALM: ${TURN_REALM:-airdrop-lite}
+      TURN_PORT: 3478
+      TURN_MIN_PORT: 49160
+      TURN_MAX_PORT: 49200
+    ports:
+      - "127.0.0.1:8080:8080/tcp"
+      - "3478:3478/tcp"
+      - "3478:3478/udp"
+      - "49160-49200:49160-49200/udp"

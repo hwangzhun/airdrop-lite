@@ -10,9 +10,7 @@
       "DOM.Iterable"
     ],
     "skipLibCheck": true,
-    "types": [
-      "node"
-    ],
+    "types": ["node", "vite/client"],
     "moduleResolution": "bundler",
     "isolatedModules": true,
     "moduleDetection": "force",
@@ -25,5 +23,7 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  "include": ["*.ts", "*.tsx", "components/**/*.tsx", "services/**/*.ts", "views/**/*.tsx", "tests/**/*.ts"],
+  "exclude": ["worker", "dist", "node_modules"]
 }
