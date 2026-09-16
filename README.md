@@ -20,7 +20,7 @@
         │
         ▼
 单个 Docker 容器
-├── Node.js：React 静态站 + 房间 API + WebSocket 信令
+├── Go：React 静态站 + 房间 API + WebSocket 信令
 └── coturn：STUN/TURN 中继
 
 发送方浏览器 ═══ WebRTC DataChannel ═══ 接收方浏览器
@@ -28,7 +28,9 @@
               直连失败时经 coturn
 ```
 
-Node 服务只转发 SDP/ICE 信令，不接收文件名、哈希或文件二进制。使用 TURN 时，coturn 转发 WebRTC 的 DTLS 加密流量，但服务器仍可观察连接元数据与流量大小。
+Node.js 只用于本地前端开发和 Docker 的 React 构建阶段；最终生产镜像不包含 Node.js 运行时。
+
+Go 服务只转发 SDP/ICE 信令，不接收文件名、哈希或文件二进制。使用 TURN 时，coturn 转发 WebRTC 的 DTLS 加密流量，但服务器仍可观察连接元数据与流量大小。
 
 房间和限流状态只保存在内存中。容器重启会清空所有临时房间，这符合当前临时传输语义；此部署模式不支持多个容器副本。
 
@@ -56,7 +58,7 @@ TURN_REALM=airdrop.example.com
 - `ALLOWED_ORIGINS` 是浏览器访问网站时的完整 HTTPS origin；多个域名用逗号分隔。
 - `TURN_HOST` 必须从公网客户端解析到部署机器。
 - `TURN_EXTERNAL_IP` 必须是 Docker 宿主机的公网 IPv4。
-- `TURN_SECRET` 至少 24 个字符，只在 Node 与 coturn 之间共享，浏览器只会收到两小时有效的临时凭据。
+- `TURN_SECRET` 至少 24 个字符，只在 Go 服务与 coturn 之间共享，浏览器只会收到两小时有效的临时凭据。
 
 ### 2. 开放端口
 
@@ -80,11 +82,11 @@ docker compose logs -f airdrop-lite
 
 反向代理将 `https://airdrop.example.com` 转发到 `http://127.0.0.1:8080`。需要保留原始 `Host`，并传递 `X-Forwarded-For`；常见反向代理的 WebSocket 配置同样适用于 `/api/rooms/*/ws`。
 
-健康检查地址为 `GET /healthz`。它验证 Node 服务可用；实际部署后还应从外网不同网络各传输一次文件，确认页面显示“本站 TURN”时中继端口也可用。
+健康检查地址为 `GET /healthz`。它验证 Go 服务可用；Go 主进程同时监管 coturn，coturn 异常退出会使容器失败。实际部署后还应从外网不同网络各传输一次文件，确认页面显示“本站 TURN”时中继端口也可用。
 
 ## 本地开发
 
-要求 Node.js 20 或更高。
+要求 Node.js 22 或更高、Go 1.26 或更高。
 
 ```bash
 npm install
@@ -92,7 +94,7 @@ cp .env.example .env.local
 npm run dev:all
 ```
 
-前端默认位于 `http://localhost:3000`，Node 信令服务位于 `http://localhost:8080`。本地未启动 coturn 时仍可测试房间、信令和可直连的 WebRTC 场景；完整 TURN 回退请使用 Docker 部署方式。
+前端默认位于 `http://localhost:3000`，Go 信令服务位于 `http://localhost:8080`。本地未启动 coturn 时仍可测试房间、信令和可直连的 WebRTC 场景；完整 TURN 回退请使用 Docker 部署方式。
 
 运行全部检查：
 
@@ -115,10 +117,9 @@ docker build -t airdrop-lite:local .
 ```text
 components/          二维码等前端组件
 services/p2p/        API、WebRTC 会话、哈希与传输协议
-server/src/          自托管房间 API、WebSocket 信令与 TURN 凭据
+server/              Go 房间 API、WebSocket 信令、TURN 凭据与进程监管
 views/               发送与接收状态机
-docker/              单容器进程入口
-tests/               协议与信令单元/集成测试
+tests/               前端传输工具测试
 ```
 
 ## License

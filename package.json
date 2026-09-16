@@ -1,34 +1,33 @@
 {
   "name": "airdrop-lite",
   "private": true,
-  "version": "0.0.1-beta.0",
+  "version": "0.0.1-beta.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:server": "tsx watch server/src/index.ts",
+    "dev:server": "go run ./server serve",
     "dev:all": "concurrently \"npm run dev\" \"npm run dev:server\"",
-    "build": "vite build && tsc -p server/tsconfig.json",
-    "start": "node dist-server/index.js",
+    "build:web": "vite build",
+    "build:server": "go build -trimpath -o dist-server/airdrop-lite ./server",
+    "build": "npm run build:web && npm run build:server",
+    "start": "./dist-server/airdrop-lite serve",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit && tsc -p server/tsconfig.json --noEmit",
-    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run && go test ./...",
     "check": "npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {
     "qrcode": "^1.5.4",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "ws": "^8.21.3"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
-    "@types/ws": "^8.18.1",
     "@vitejs/plugin-react": "^5.0.0",
     "concurrently": "^9.1.2",
-    "tsx": "^4.20.5",
     "typescript": "~5.8.2",
     "vite": "^6.2.0",
     "vitest": "^5.0.0"

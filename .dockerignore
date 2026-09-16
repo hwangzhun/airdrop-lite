@@ -9,3 +9,5 @@ npm-debug.log*
 coverage
 .wrangler
 worker
+.go-build
+*.test
